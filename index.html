@@ -3,63 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IACF — Industry Accelerator Framework</title>
-<meta name="description" content="IACF (Industry Accelerator Framework) is a comprehensive solution that provides modern industry application solutions.">
+<title>IACF - Industry AI Core Framework — IACF</title>
 <style>
-  :root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --bg:#ffffff; --soft:#f1f5f9; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); line-height:1.6; }
-  header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--soft); }
-  .logo { font-size:26px; font-weight:800; letter-spacing:2px; }
-  .logo span { color:var(--accent); }
-  nav a { color:var(--sub); text-decoration:none; margin-left:24px; font-size:15px; }
-  nav a:hover { color:var(--accent); }
-  .hero { text-align:center; padding:96px 6vw 72px; }
-  .hero h1 { font-size:44px; line-height:1.2; margin-bottom:20px; }
-  .hero h1 span { color:var(--accent); }
-  .hero p { font-size:19px; color:var(--sub); max-width:640px; margin:0 auto 32px; }
-  .btn { display:inline-block; background:var(--accent); color:#fff; padding:12px 28px; border-radius:8px; text-decoration:none; font-size:16px; }
-  .btn:hover { opacity:.9; }
-  .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px; padding:24px 6vw 80px; max-width:1100px; margin:0 auto; }
-  .card { background:var(--soft); border-radius:12px; padding:28px; }
-  .card h3 { margin-bottom:10px; font-size:18px; }
-  .card p { color:var(--sub); font-size:15px; }
-  footer { text-align:center; padding:32px 6vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
 </style>
 </head>
 <body>
-<header>
+<header class="site">
   <div class="logo">IACF<span>.</span></div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#solutions">Solutions</a>
-    <a href="#contact">Contact</a>
+  <nav class="main">
+      <a href="index.html">Home</a>
+      <a href="pages/what-is-iacf.html">What is IACF</a>
+      <a href="pages/features.html">Features</a>
+      <a href="pages/usecases.html">Use Cases</a>
+      <a href="pages/document.html">Document</a>
+      <a href="pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="pages/contact-us.html">Contact</a>
+      <a href="posts.html">All Posts</a>
   </nav>
 </header>
-
-<section class="hero" id="about">
-  <h1>Industry Accelerator <span>Framework</span></h1>
-  <p>IACF is a comprehensive solution that provides modern industry application solutions — helping teams build, integrate, and scale faster.</p>
-  <a class="btn" href="#solutions">Explore Solutions</a>
-</section>
-
-<section class="features" id="solutions">
-  <div class="card">
-    <h3>Accelerators</h3>
-    <p>Ready-made frameworks and templates that shorten delivery time for common industry applications.</p>
-  </div>
-  <div class="card">
-    <h3>Integration</h3>
-    <p>Connectors and tooling that plug modern AI and automation capabilities into existing systems.</p>
-  </div>
-  <div class="card">
-    <h3>Scale</h3>
-    <p>Patterns and practices proven in production, so solutions grow with your business.</p>
-  </div>
-</section>
-
-<footer id="contact">
-  <p>&copy; 2026 IACF. All rights reserved.</p>
-</footer>
+<main>
+<article><p data-path-to-node="5">The <b data-path-to-node="5" data-index-in-node="4">IACF (Industry AI Core Framework) </b> is an open-source, industrial-grade framework designed to modernize manufacturing IT. In an era where 70% of digital transformation projects stall due to fragmented data and legacy constraints, IACF provides a unified core that integrates existing ERP, MES, and SCADA systems with advanced <b data-path-to-node="5" data-index-in-node="299">Agentic AI</b>. By transforming static data into autonomous action, IACF enables manufacturers to achieve "software-defined operations."</p>
+<figure><img class=" wp-image-272" src="http://www.iacf.us/wp-content/uploads/2026/03/IACF-Architecture-300x172.png" alt="Industry AI Core Framework Architecture" width="350" height="201" /> Industry AI Core Framework Architecture</figure>
+<h2 data-path-to-node="7"><b data-path-to-node="7" data-index-in-node="0">1. The Core Solution: A Unified Industrial Operating System</b></h2>
+<p data-path-to-node="8">IACF serves as the "intelligent glue" for the smart factory. Unlike traditional "rip-and-replace" solutions, it layers on top of existing infrastructure to provide:</p>
+<ul data-path-to-node="9">
+<li>
+<p data-path-to-node="9,0,0"><b data-path-to-node="9,0,0" data-index-in-node="0">High-Performance Backend:</b> Built with <b data-path-to-node="9,0,0" data-index-in-node="37">Go</b> for high-concurrency and low-latency shopfloor tasks.</p>
+</li>
+<li>
+<p data-path-to-node="9,1,0"><b data-path-to-node="9,1,0" data-index-in-node="0">Modular UI Architecture:</b> A modern <b data-path-to-node="9,1,0" data-index-in-node="34">React + TypeScript</b> frontend that allows for rapid, drag-and-drop customization of operator dashboards.</p>
+</li>
+<li>
+<p data-path-to-node="9,2,0"><b data-path-to-node="9,2,0" data-index-in-node="0">Agnostic Deployment:</b> Supports <b data-path-to-node="9,2,0" data-index-in-node="30">Cloud, On-Premise, and Edge</b> configurations, ensuring sub-second response times for critical safety and quality applications.</p>
+</li>
+</ul>
+<hr data-path-to-node="10" />
+<h2 data-path-to-node="11"><b data-path-to-node="11" data-index-in-node="0">2. Enhancing Core Capabilities: The AI Agent Studio</b></h2>
+<p data-path-to-node="12">The centerpiece of the IACF evolution is the <b data-path-to-node="12" data-index-in-node="45">AI Agent Studio</b>, which moves beyond simple chatbots to <b data-path-to-node="12" data-index-in-node="100">Agentic AI</b>. These agents are autonomous entities capable of perceiving the environment, reasoning through complex goals, and executing tasks across multiple systems.</p>
+<h3 data-path-to-node="13"><b data-path-to-node="13" data-index-in-node="0">Key Capability Enhancements:</b></h3>
+<ul data-path-to-node="14">
+<li>
+<p data-path-to-node="14,0,0"><b data-path-to-node="14,0,0" data-index-in-node="0">Low-Code Agent Builder:</b> Empowering process engineers to build agents using natural language prompts rather than complex coding.</p>
+</li>
+<li>
+<p data-path-to-node="14,1,0"><b data-path-to-node="14,1,0" data-index-in-node="0">Multi-Agent Orchestration:</b> Enabling "agent swarms" where a <b data-path-to-node="14,1,0" data-index-in-node="59">Diagnostic Agent</b> (detecting a vibration anomaly) coordinates with a <b data-path-to-node="14,1,0" data-index-in-node="127">Planning Agent</b> (rescheduling a work order) and a <b data-path-to-node="14,1,0" data-index-in-node="176">Logistics Agent</b> (ordering a spare part).</p>
+</li>
+<li>
+<p data-path-to-node="14,2,0"><b data-path-to-node="14,2,0" data-index-in-node="0">Knowledge Grounding:</b> Agents are "grounded" in your specific shopfloor manuals, historical maintenance logs, and real-time IoT telemetry, ensuring every decision is context-aware.</p>
+</li>
+</ul>
+<hr data-path-to-node="15" />
+<h2 data-path-to-node="16"><b data-path-to-node="16" data-index-in-node="0">3. Strategic Industry Value Propositions</b></h2>
+<p data-path-to-node="17">The IACF solution addresses the four most critical friction points in modern industry:</p>
+<table data-path-to-node="18">
+<thead>
+<tr>
+<td><strong>Capability</strong></td>
+<td><strong>Impact</strong></td>
+<td><strong>Industrial Outcome</strong></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span data-path-to-node="18,1,0,0"><b data-path-to-node="18,1,0,0" data-index-in-node="0">Predictive Maintenance</b></span></td>
+<td><span data-path-to-node="18,1,1,0">Anomaly detection &amp; RUL (Remaining Useful Life) estimation.</span></td>
+<td><span data-path-to-node="18,1,2,0"><b data-path-to-node="18,1,2,0" data-index-in-node="0">30% reduction</b> in unplanned downtime.</span></td>
+</tr>
+<tr>
+<td><span data-path-to-node="18,2,0,0"><b data-path-to-node="18,2,0,0" data-index-in-node="0">Adaptive Quality Control</b></span></td>
+<td><span data-path-to-node="18,2,1,0">AI-driven visual inspection &amp; root cause analysis.</span></td>
+<td><span data-path-to-node="18,2,2,0"><b data-path-to-node="18,2,2,0" data-index-in-node="0">90% fewer</b> defects reaching customers.</span></td>
+</tr>
+<tr>
+<td><span data-path-to-node="18,3,0,0"><b data-path-to-node="18,3,0,0" data-index-in-node="0">Agile Production Planning</b></span></td>
+<td><span data-path-to-node="18,3,1,0">Real-time rescheduling based on material/labor availability.</span></td>
+<td><span data-path-to-node="18,3,2,0"><b data-path-to-node="18,3,2,0" data-index-in-node="0">25% improvement</b> in factory throughput.</span></td>
+</tr>
+<tr>
+<td><span data-path-to-node="18,4,0,0"><b data-path-to-node="18,4,0,0" data-index-in-node="0">Global KPI Visibility</b></span></td>
+<td><span data-path-to-node="18,4,1,0">3D Digital Virtual Twins &amp; Global KPI Portals.</span></td>
+<td><span data-path-to-node="18,4,2,0">Unified executive control across global plant networks.</span></td>
+</tr>
+</tbody>
+</table>
+<hr data-path-to-node="19" />
+<h2 data-path-to-node="20"><b data-path-to-node="20" data-index-in-node="0">4. Future-Proofing with Open Standards</b></h2>
+<p data-path-to-node="21">By adopting an open-source model, IACF eliminates vendor lock-in and fosters a collaborative ecosystem.</p>
+<ul data-path-to-node="22">
+<li>
+<p data-path-to-node="22,0,0"><b data-path-to-node="22,0,0" data-index-in-node="0">Model Context Protocol (MCP):</b> Ensures interoperability between different AI models and industrial data sources.</p>
+</li>
+<li>
+<p data-path-to-node="22,1,0"><b data-path-to-node="22,1,0" data-index-in-node="0">Built-in Governance:</b> Every agent action is logged and auditable, ensuring that autonomous decisions remain within safety and regulatory guardrails.</p>
+</li>
+</ul>
+<h3 data-path-to-node="24"><b data-path-to-node="24" data-index-in-node="0">The Path Forward</b></h3>
+<p data-path-to-node="25">The IACF is not just a tool; it is a strategic platform for manufacturers ready to move from "seeing what happened" to "predicting and automating what happens next."</p></article>
+<h2 style="margin:36px 0 6px">Latest Updates</h2>
+<ul class="postlist">
+<li><span class="d">2026-10-19</span><a href="posts/connecting-an-ai-assistant-to-mom-mcp-stdio-or-http-with-oauth-2-1-sign-in.html">Connecting an AI Assistant to MoM-MCP: stdio or HTTP with OAuth 2.1 Sign-In</a></li>
+<li><span class="d">2026-10-16</span><a href="posts/more-than-an-expense-tracker-meet-iacf-personal-finance-a-self-hosted-money-hub.html">More Than an Expense Tracker: Meet IACF Personal Finance, a Self-Hosted Money Hub</a></li>
+<li><span class="d">2026-10-16</span><a href="posts/seeing-a-material-shortage-before-it-stops-the-line.html">Seeing a Material Shortage Before It Stops the Line</a></li>
+<li><span class="d">2026-10-14</span><a href="posts/inside-the-mom-mcp-flow-engine-from-any-trigger-to-a-governed-approved-action.html">Inside the MoM-MCP Flow Engine: From Any Trigger to a Governed, Approved Action</a></li>
+<li><span class="d">2026-10-13</span><a href="posts/bringing-ai-agents-into-the-delmia-apriso-sdlc-introducing-apriso-mcp.html">Bringing AI agents into the DELMIA Apriso SDLC: introducing apriso-mcp</a></li>
+<li><span class="d">2026-10-12</span><a href="posts/choosing-a-mom-mcp-edition-full-lite-or-portal.html">Choosing a MoM-MCP Edition: Full, Lite, or Portal</a></li>
+<li><span class="d">2026-10-11</span><a href="posts/i-needed-a-finance-app-so-i-asked-my-bot-to-build-it.html">I Needed a Finance App, So I Asked My Bot to Build It</a></li>
+<li><span class="d">2026-10-10</span><a href="posts/testbot-record-it-write-it-or-just-describe-it-then-watch-it-test-itself.html">From first recording to signed-off release: the life of a test in Testbot</a></li>
+<li><span class="d">2026-10-09</span><a href="posts/quality-response-loop-from-defect-heat-map-to-root-cause-to-capa-with-a-human-sign-off.html">Quality Response Loop: From Defect Heat Map to Root Cause to CAPA, with a Human Sign-Off</a></li>
+<li><span class="d">2026-10-08</span><a href="posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application</a></li>
+</ul>
+<p style="margin-top:14px"><a href="posts.html">See all 42 posts &rarr;</a></p>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
 </body>
 </html>
