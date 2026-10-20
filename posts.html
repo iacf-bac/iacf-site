@@ -3,101 +3,481 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Posts — IACF</title>
+<title>Articles — IACF</title>
+<meta name="description" content="IACF — Industry AI Core Framework: agentic AI for smart manufacturing.">
 <style>
-:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
-header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
-.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
-.logo span { color:var(--accent); }
-nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
-nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
-nav.main a:hover { color:var(--accent); }
-main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
-main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
-.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
-article p { margin:0 0 16px; }
-article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
-article ul, article ol { margin:0 0 16px 22px; }
-article img { max-width:100%; height:auto; border-radius:8px; }
-article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
-article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
-article pre code { background:none; padding:0; }
-article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
-article table { border-collapse:collapse; margin-bottom:16px; }
-article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
-ul.postlist { list-style:none; }
-ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
-ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
-ul.postlist a:hover { color:var(--accent); }
-ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
-footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
-footer a { color:var(--sub); }
+:root{
+  --bg:#0a0f1e; --bg2:#0d1526; --panel:#111c33; --panel2:#0f1930;
+  --line:#1e2c4a; --ink:#e8eef9; --sub:#94a7c7; --mut:#64769a;
+  --acc:#38bdf8; --acc2:#818cf8; --grad:linear-gradient(92deg,#38bdf8, #818cf8 55%,#c084fc);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+header.site{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;letter-spacing:3px;color:var(--ink)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-size:9.5px;letter-spacing:2.6px;color:var(--mut);font-weight:600}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 18px}
+nav.main a{color:var(--sub);font-size:14px;font-weight:500}
+nav.main a:hover{color:var(--ink);text-decoration:none}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 480px at 85% -10%,rgba(56,189,248,.16),transparent 60%),radial-gradient(700px 420px at 8% 110%,rgba(129,140,248,.14),transparent 60%),var(--bg2);border-bottom:1px solid var(--line)}
+.hero-in{max-width:1180px;margin:0 auto;padding:84px 24px 72px}
+.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:3px;color:var(--acc);border:1px solid rgba(56,189,248,.4);padding:5px 12px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.5px;max-width:820px}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:20px;font-size:19px;color:var(--sub);max-width:680px}
+.cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:600;font-size:15.5px;background:var(--grad);color:#06101f}
+.btn:hover{text-decoration:none;opacity:.92}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.stats{margin-top:52px;display:flex;gap:44px;flex-wrap:wrap}
+.stat .n{font-size:27px;font-weight:800}
+.stat .l{font-size:12.5px;color:var(--mut);letter-spacing:1.4px;text-transform:uppercase}
+section.blk{max-width:1180px;margin:0 auto;padding:64px 24px 8px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px}
+.sec-head h2{font-size:29px;font-weight:800;letter-spacing:-.3px}
+.sec-head a{font-size:14.5px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-3px);border-color:#2c4470;text-decoration:none}
+.card .thumb{height:168px;background:var(--panel2) center/cover no-repeat;border-bottom:1px solid var(--line)}
+.card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .d{font-size:12.5px;color:var(--acc);font-weight:700;letter-spacing:1.2px}
+.card h3{font-size:17.5px;line-height:1.35;color:var(--ink);font-weight:700}
+.card p{font-size:14px;color:var(--sub);flex:1}
+.card .more{font-size:13.5px;font-weight:600;color:var(--acc)}
+.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+.fcard .ic{font-size:26px;margin-bottom:12px}
+.fcard h3{font-size:18px;margin-bottom:8px}
+.fcard p{font-size:14.5px;color:var(--sub)}
+.about{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 32px;font-size:16.5px;color:#c6d3ea}
+main.page{max-width:860px;margin:0 auto;padding:44px 24px 64px}
+main.page h1{font-size:33px;line-height:1.25;letter-spacing:-.3px;margin-bottom:8px}
+.date{color:var(--acc);font-size:13px;font-weight:700;letter-spacing:1.2px;margin-bottom:26px;text-transform:uppercase}
+article p{margin:0 0 16px;color:#d5deef}
+article h2,article h3,article h4{margin:28px 0 10px;line-height:1.3;color:var(--ink)}
+article ul,article ol{margin:0 0 16px 22px;color:#d5deef}
+article img{max-width:100%;height:auto;border-radius:10px}
+article figure{margin:0 0 18px;color:var(--sub);font-size:13.5px;text-align:center}
+article pre{background:#0a1224;border:1px solid var(--line);padding:14px;border-radius:10px;overflow-x:auto;margin-bottom:16px;font-size:13.5px}
+article code{background:#0a1224;border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.92em}
+article pre code{background:none;border:none;padding:0}
+article blockquote{border-left:3px solid var(--acc);padding-left:14px;color:var(--sub);margin:0 0 16px}
+article table{border-collapse:collapse;margin-bottom:16px}
+article td,article th{border:1px solid var(--line);padding:6px 10px}
+article a{word-break:break-word}
+footer{margin-top:70px;border-top:1px solid var(--line);background:var(--bg2)}
+.footer-in{max-width:1180px;margin:0 auto;padding:34px 24px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;color:var(--mut);font-size:13.5px}
+@media (max-width:640px){.hero h1{font-size:36px}.hero-in{padding:56px 20px 48px}}
 </style>
 </head>
 <body>
-<header class="site">
-  <div class="logo">IACF<span>.</span></div>
+<header class="site"><div class="header-in">
+  <a class="logo" href="index.html" style="text-decoration:none">IACF<b>.</b><small>INDUSTRY AI CORE FRAMEWORK</small></a>
   <nav class="main">
       <a href="index.html">Home</a>
       <a href="pages/what-is-iacf.html">What is IACF</a>
       <a href="pages/features.html">Features</a>
       <a href="pages/usecases.html">Use Cases</a>
       <a href="pages/document.html">Document</a>
-      <a href="pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="pages/release-0-1-and-roadmap.html">Roadmap</a>
       <a href="pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="posts.html">Articles</a>
       <a href="pages/contact-us.html">Contact</a>
-      <a href="posts.html">All Posts</a>
   </nav>
-</header>
-<main>
-<h1>All Posts</h1>
-<ul class="postlist">
-<li><span class="d">2026-10-19</span><a href="posts/connecting-an-ai-assistant-to-mom-mcp-stdio-or-http-with-oauth-2-1-sign-in.html">Connecting an AI Assistant to MoM-MCP: stdio or HTTP with OAuth 2.1 Sign-In</a></li>
-<li><span class="d">2026-10-16</span><a href="posts/more-than-an-expense-tracker-meet-iacf-personal-finance-a-self-hosted-money-hub.html">More Than an Expense Tracker: Meet IACF Personal Finance, a Self-Hosted Money Hub</a></li>
-<li><span class="d">2026-10-16</span><a href="posts/seeing-a-material-shortage-before-it-stops-the-line.html">Seeing a Material Shortage Before It Stops the Line</a></li>
-<li><span class="d">2026-10-14</span><a href="posts/inside-the-mom-mcp-flow-engine-from-any-trigger-to-a-governed-approved-action.html">Inside the MoM-MCP Flow Engine: From Any Trigger to a Governed, Approved Action</a></li>
-<li><span class="d">2026-10-13</span><a href="posts/bringing-ai-agents-into-the-delmia-apriso-sdlc-introducing-apriso-mcp.html">Bringing AI agents into the DELMIA Apriso SDLC: introducing apriso-mcp</a></li>
-<li><span class="d">2026-10-12</span><a href="posts/choosing-a-mom-mcp-edition-full-lite-or-portal.html">Choosing a MoM-MCP Edition: Full, Lite, or Portal</a></li>
-<li><span class="d">2026-10-11</span><a href="posts/i-needed-a-finance-app-so-i-asked-my-bot-to-build-it.html">I Needed a Finance App, So I Asked My Bot to Build It</a></li>
-<li><span class="d">2026-10-10</span><a href="posts/testbot-record-it-write-it-or-just-describe-it-then-watch-it-test-itself.html">From first recording to signed-off release: the life of a test in Testbot</a></li>
-<li><span class="d">2026-10-09</span><a href="posts/quality-response-loop-from-defect-heat-map-to-root-cause-to-capa-with-a-human-sign-off.html">Quality Response Loop: From Defect Heat Map to Root Cause to CAPA, with a Human Sign-Off</a></li>
-<li><span class="d">2026-10-08</span><a href="posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application</a></li>
-<li><span class="d">2026-10-05</span><a href="posts/change-is-safe-only-when-the-whole-process-is-retested.html">Change is safe only when the whole process is retested</a></li>
-<li><span class="d">2026-05-08</span><a href="posts/mom-mcp-the-trusted-bridge-between-ai-and-manufacturing-operations.html">MoM-MCP: The Trusted Bridge Between AI and Manufacturing Operations</a></li>
-<li><span class="d">2026-03-20</span><a href="posts/introduction-to-iac-ai-agent-studio.html">Introduction to IAC AI Agent Studio</a></li>
-<li><span class="d">2026-03-19</span><a href="posts/beyond-stateless-ai-the-iacf-agent-architecture-redefining-smart-manufacturing.html">Beyond Stateless AI: The IACF Agent Architecture Redefining Smart Manufacturing</a></li>
-<li><span class="d">2026-03-12</span><a href="posts/the-shift-from-rigid-automation-to-agentic-orchestration-an-industrial-ai-agent-core-framework-for-agile-manufacturing.html">The Shift from Rigid Automation to Agentic Orchestration: An Industrial AI Agent Core Framework for Agile Manufacturing</a></li>
-<li><span class="d">2026-02-27</span><a href="posts/iacf-ai-agent-studio.html">IACF AI Agent Studio</a></li>
-<li><span class="d">2026-01-24</span><a href="posts/accelerating-manufacturing-digital-transformation-with-ai-the-power-of-iacf.html">Accelerating Manufacturing Digital Transformation with AI: The Power of IACF</a></li>
-<li><span class="d">2026-01-09</span><a href="posts/iacf-global-kpi-portal-digital-virtual-twin.html">IACF Global KPI Portal &amp; Digital Virtual Twin</a></li>
-<li><span class="d">2025-12-12</span><a href="posts/ai-driven-production-planning-a-smarter-path-to-reliable-agile-manufacturing.html">AI-Driven Production Planning: A Smarter Path to Reliable, Agile Manufacturing</a></li>
-<li><span class="d">2025-11-24</span><a href="posts/iacf-the-next-generation-intelligent-application-configuration-framework.html">IACF: The Next-Generation Intelligent Application Configuration Framework</a></li>
-<li><span class="d">2025-11-24</span><a href="posts/the-new-react-typescript-ui-architecture-of-iacf.html">The New React + TypeScript UI Architecture of IACF</a></li>
-<li><span class="d">2025-10-03</span><a href="posts/ai-data-analytics-platform.html">AI Data Analytics Platform</a></li>
-<li><span class="d">2025-09-26</span><a href="posts/air.html">Unlocking Business Insights with AI-Driven Text-to-SQL Meets Modern BI</a></li>
-<li><span class="d">2025-09-20</span><a href="posts/transforming-manufacturing-with-ai-powered-visual-quality-inspection.html">Transforming Manufacturing with AI-Powered Visual Quality Inspection</a></li>
-<li><span class="d">2024-06-03</span><a href="posts/embracing-the-future-how-ai-is-revolutionizing-the-manufacturing-industry-with-iacf.html">Embracing the Future: How AI is Revolutionizing the Manufacturing Industry with IACF</a></li>
-<li><span class="d">2024-05-30</span><a href="posts/revolutionizing-manufacturing-it-introducing-iacfs-advanced-ai-capabilities.html">Revolutionizing Manufacturing IT: Introducing IACF&#x27;s Advanced AI Capabilities</a></li>
-<li><span class="d">2024-05-23</span><a href="posts/introducing-iacfs-ai-powered-business-process-management-from-mockup-to-execution.html">Introducing IACF’s AI-Powered Business Process Management: From Mockup to Execution</a></li>
-<li><span class="d">2024-05-22</span><a href="posts/revolutionizing-manufacturing-it-with-iacfs-ai-generated-workflow-capability.html">Revolutionizing Manufacturing IT with IACF&#x27;s AI-Generated Workflow Capability</a></li>
-<li><span class="d">2024-05-20</span><a href="posts/revolutionizing-manufacturing-it-with-iacfs-ai-generated-code-feature.html">Revolutionizing Manufacturing IT with IACF’s AI-Generated Code Feature</a></li>
-<li><span class="d">2024-05-11</span><a href="posts/streamlining-data-management-with-iacfs-jsonmanager-library.html">Streamlining Data Management with IACF&#x27;s JsonManager Library</a></li>
-<li><span class="d">2024-04-28</span><a href="posts/iacf-installation-and-deployment.html">IACF installation and deployment</a></li>
-<li><span class="d">2024-04-26</span><a href="posts/iacf-helps-transforming-of-digital-manufacturing.html">IACF helps transforming of digital manufacturing</a></li>
-<li><span class="d">2024-04-24</span><a href="posts/iac-ui-web-server-installation-and-build-guide.html">IAC-UI Web Server: Installation and Build Guide</a></li>
-<li><span class="d">2024-04-24</span><a href="posts/iacf-application-server-seamless-deployment-and-build-guide.html">IAC Application Server: Seamless Deployment and Build Guide</a></li>
-<li><span class="d">2024-04-20</span><a href="posts/release-0-1-roadmap.html">Release 0.1 &amp;amp; Roadmap</a></li>
-<li><span class="d">2024-03-27</span><a href="posts/unleashing-the-power-of-industry-with-the-innovative-iacf-cloud-architecture.html">Unleashing the Power of Industry with the Innovative IACF Cloud Architecture</a></li>
-<li><span class="d">2024-02-27</span><a href="posts/introducing-iacf-on-the-cloud-a-revolutionary-framework-for-industry-application-acceleration.html">Introducing IACF on the Cloud: A Revolutionary Framework for Industry Application Acceleration</a></li>
-<li><span class="d">2023-12-10</span><a href="posts/introducing-the-integrated-geo-capabilities-of-the-innovative-iacf-framework.html">Introducing the Integrated geo Capabilities of the Innovative IACF Framework</a></li>
-<li><span class="d">2023-11-03</span><a href="posts/iacf-platform-new-features-transforming-configuration-and-design-with-innovation.html">IACF Platform new features: Transforming Configuration and Design with Innovation</a></li>
-<li><span class="d">2023-10-29</span><a href="posts/revolutionizing-industry-processes-unveiling-iacfs-new-workflow-management-feature.html">Revolutionizing Industry Processes: Unveiling IACF&#x27;s New Workflow Management Feature</a></li>
-<li><span class="d">2023-10-28</span><a href="posts/revolutionizing-industry-solutions-iacfs-cutting-edge-notification-and-chat-features.html">Revolutionizing Industry Solutions: #IACF&#x27;s Cutting-edge Notification and Chat Features</a></li>
-<li><span class="d">2023-10-27</span><a href="posts/iacf-energy-management-solution.html">IACF Energy Management Solution</a></li>
-</ul>
+</div></header>
+<main class="page" style="max-width:1180px">
+<h1>Articles</h1>
+<div class="date">42 articles · AI in manufacturing, newest first</div>
+<div class="grid">
+  <a class="card" href="posts/connecting-an-ai-assistant-to-mom-mcp-stdio-or-http-with-oauth-2-1-sign-in.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/mom-mcp-connect-paths.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-19</div>
+      <h3>Connecting an AI Assistant to MoM-MCP: stdio or HTTP with OAuth 2.1 Sign-In</h3>
+      <p>MoM-MCP is IACF&#x27;s bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM,…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/more-than-an-expense-tracker-meet-iacf-personal-finance-a-self-hosted-money-hub.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/pf-architecture.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-16</div>
+      <h3>More Than an Expense Tracker: Meet IACF Personal Finance, a Self-Hosted Money Hub</h3>
+      <p>Projects, reimbursements, investment returns, reminders and AI-agent capture, all running on your own machine. Most budgeting apps answer one…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/seeing-a-material-shortage-before-it-stops-the-line.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/material-shortage-flow.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-16</div>
+      <h3>Seeing a Material Shortage Before It Stops the Line</h3>
+      <p>A material shortage is easy to explain after the line stops. The hard part is seeing it early enough to act. Demand lives in MES. On-hand, open…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/inside-the-mom-mcp-flow-engine-from-any-trigger-to-a-governed-approved-action.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/flow-engine-architecture.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-14</div>
+      <h3>Inside the MoM-MCP Flow Engine: From Any Trigger to a Governed, Approved Action</h3>
+      <p>MoM-MCP is IACF&#x27;s bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM,…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/bringing-ai-agents-into-the-delmia-apriso-sdlc-introducing-apriso-mcp.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/architecture.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-13</div>
+      <h3>Bringing AI agents into the DELMIA Apriso SDLC: introducing apriso-mcp</h3>
+      <p>Anyone who has delivered on DELMIA Apriso knows where project time goes: turning a business requirement into a CDD/DDD, then into DFCs, Views,…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/choosing-a-mom-mcp-edition-full-lite-or-portal.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/mom-mcp-editions-2.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-12</div>
+      <h3>Choosing a MoM-MCP Edition: Full, Lite, or Portal</h3>
+      <p>MoM-MCP is IACF&#x27;s bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM,…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/i-needed-a-finance-app-so-i-asked-my-bot-to-build-it.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/grokbot-finance-diagram-how-it-was-built.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-11</div>
+      <h3>I Needed a Finance App, So I Asked My Bot to Build It</h3>
+      <p>.iacf-post{max-width:760px;margin:0 auto;font-family:Georgia,&#x27;Noto Serif&#x27;,&#x27;Noto Serif CJK SC&#x27;,serif;font-size:19px;line-height:1.65;color:#1E2733}…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/testbot-record-it-write-it-or-just-describe-it-then-watch-it-test-itself.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/diagram.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-10</div>
+      <h3>From first recording to signed-off release: the life of a test in Testbot</h3>
+      <p>The October 5 article explained why a change is safe only when the whole process is retested. This one follows a single test through Testbot, from…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/quality-response-loop-from-defect-heat-map-to-root-cause-to-capa-with-a-human-sign-off.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/quality-loop-flow.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-09</div>
+      <h3>Quality Response Loop: From Defect Heat Map to Root Cause to CAPA, with a Human Sign-Off</h3>
+      <p>A defect spike is easy to see and hard to act on. The data sits in several systems. The analysis takes time, and the fix has to go through the right…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/mom-mcp-architecture.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-08</div>
+      <h3>Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application</h3>
+      <p>Manufacturers want AI that does more than chat. They want it to read live production data, explain what is happening, and recommend what to do next.…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/change-is-safe-only-when-the-whole-process-is-retested.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/10/4-uat-group-tracking-300x179.png')"></div>
+    <div class="body">
+      <div class="d">2026-10-05</div>
+      <h3>Change is safe only when the whole process is retested</h3>
+      <p>The problem Build from scratch, improve what exists, or add one new feature: the result is the same. A change in one place can break a process that…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/mom-mcp-the-trusted-bridge-between-ai-and-manufacturing-operations.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/05/mom_mcp-300x193.png')"></div>
+    <div class="body">
+      <div class="d">2026-05-08</div>
+      <h3>MoM-MCP: The Trusted Bridge Between AI and Manufacturing Operations</h3>
+      <p>Artificial Intelligence is rapidly transforming manufacturing. From predictive analytics to autonomous scheduling, AI promises to improve…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/introduction-to-iac-ai-agent-studio.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/03/IAC-AI-Agent-Studio-Architecture-201x300.png')"></div>
+    <div class="body">
+      <div class="d">2026-03-20</div>
+      <h3>Introduction to IAC AI Agent Studio</h3>
+      <p>The IAC AI Agent Studio is a production-grade multi-agent orchestration platform built directly into the IAC application framework. At its core, the…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/beyond-stateless-ai-the-iacf-agent-architecture-redefining-smart-manufacturing.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/03/IACF-Architecture-300x172.png')"></div>
+    <div class="body">
+      <div class="d">2026-03-19</div>
+      <h3>Beyond Stateless AI: The IACF Agent Architecture Redefining Smart Manufacturing</h3>
+      <p>In the rapidly evolving landscape of Industry 4.0, the challenge has shifted from simply deploying Large Language Models (LLMs) to creating systems…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/the-shift-from-rigid-automation-to-agentic-orchestration-an-industrial-ai-agent-core-framework-for-agile-manufacturing.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/03/Screenshot-2026-03-08-111943-300x173.png')"></div>
+    <div class="body">
+      <div class="d">2026-03-12</div>
+      <h3>The Shift from Rigid Automation to Agentic Orchestration: An Industrial AI Agent Core Framework for Agile Manufacturing</h3>
+      <p>Subject: Industrial AI, Autonomous Process Control, Agentic Frameworks, and Inter-Agent Communication Protocols Accelerating the Transition from…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-ai-agent-studio.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/02/Screenshot-2026-02-27-144219-300x149.png')"></div>
+    <div class="body">
+      <div class="d">2026-02-27</div>
+      <h3>IACF AI Agent Studio</h3>
+      <p>An Industrial-Grade AI Agent Framework for Secure, Shopfloor-Ready Automation The rapid rise of AI agentframeworks has reshaped how organizations…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/accelerating-manufacturing-digital-transformation-with-ai-the-power-of-iacf.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2026/01/iacf-mp4-image.jpg')"></div>
+    <div class="body">
+      <div class="d">2026-01-24</div>
+      <h3>Accelerating Manufacturing Digital Transformation with AI: The Power of IACF</h3>
+      <p>In the era of Industry 4.0, manufacturers across automotive, electronics, aerospace, pharmaceuticals, and heavy industries are racing to complete…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-global-kpi-portal-digital-virtual-twin.html">
+    
+    <div class="body">
+      <div class="d">2026-01-09</div>
+      <h3>IACF Global KPI Portal &amp; Digital Virtual Twin</h3>
+      <p>Transforming Manufacturing Through Intelligent Visibility and Control Executive Overview The IACF Global KPI Portal, powered by advanced analytics…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/ai-driven-production-planning-a-smarter-path-to-reliable-agile-manufacturing.html">
+    
+    <div class="body">
+      <div class="d">2025-12-12</div>
+      <h3>AI-Driven Production Planning: A Smarter Path to Reliable, Agile Manufacturing</h3>
+      <p>Modern manufacturers face mounting pressure—volatile customer demand, labor constraints, complex product mix, and shrinking delivery windows.…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-the-next-generation-intelligent-application-configuration-framework.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2025/11/Screenshot-2025-11-24-103732-300x185.png')"></div>
+    <div class="body">
+      <div class="d">2025-11-24</div>
+      <h3>IACF: The Next-Generation Intelligent Application Configuration Framework</h3>
+      <p>Built as an intelligent, configurable, and AI-powered application platform, IACF enables organizations to create, extend, and orchestrate enterprise…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/the-new-react-typescript-ui-architecture-of-iacf.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2025/11/Screenshot-2025-11-24-104845-300x185.png')"></div>
+    <div class="body">
+      <div class="d">2025-11-24</div>
+      <h3>The New React + TypeScript UI Architecture of IACF</h3>
+      <p>The IACF UI has undergone a complete modernization, resulting in a robust, modular, and extensible front-end framework engineered for enterprise…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/ai-data-analytics-platform.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2025/10/AI-Assist-BI-Auto-execution-Made-with-Clipchamp_1759512471477.mp4')"></div>
+    <div class="body">
+      <div class="d">2025-10-03</div>
+      <h3>AI Data Analytics Platform</h3>
+      <p>A comprehensive AI-powered data analytics platform that enables natural language queries across multiple enterprise data sources using vector search…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/air.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2025/09/AIR-300x239.png')"></div>
+    <div class="body">
+      <div class="d">2025-09-26</div>
+      <h3>Unlocking Business Insights with AI-Driven Text-to-SQL Meets Modern BI</h3>
+      <p>In today’s data-driven enterprises, business users are often faced with a paradox: vast amounts of data across multiple systems , but limited ability…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/transforming-manufacturing-with-ai-powered-visual-quality-inspection.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2025/09/Screenshot-2025-09-19-173138-300x151.png')"></div>
+    <div class="body">
+      <div class="d">2025-09-20</div>
+      <h3>Transforming Manufacturing with AI-Powered Visual Quality Inspection</h3>
+      <p>In modern manufacturing, quality is everything . A single defect slipping through can mean recalls, warranty costs, or even safety risks. Traditional…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/embracing-the-future-how-ai-is-revolutionizing-the-manufacturing-industry-with-iacf.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/06/Screenshot-2024-06-02-111838-300x174.png')"></div>
+    <div class="body">
+      <div class="d">2024-06-03</div>
+      <h3>Embracing the Future: How AI is Revolutionizing the Manufacturing Industry with IACF</h3>
+      <p>The manufacturing industry stands on the brink of a transformative era, driven by the rapid advancements in Artificial Intelligence (AI). As AI…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/revolutionizing-manufacturing-it-introducing-iacfs-advanced-ai-capabilities.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/05/Screenshot-2024-05-30-083237-300x170.png')"></div>
+    <div class="body">
+      <div class="d">2024-05-30</div>
+      <h3>Revolutionizing Manufacturing IT: Introducing IACF&#x27;s Advanced AI Capabilities</h3>
+      <p>In the ever-evolving landscape of manufacturing, efficiency, and innovation are crucial for maintaining a competitive edge. As businesses strive to…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/introducing-iacfs-ai-powered-business-process-management-from-mockup-to-execution.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/05/Screenshot-2024-05-23-153018-300x149.png')"></div>
+    <div class="body">
+      <div class="d">2024-05-23</div>
+      <h3>Introducing IACF’s AI-Powered Business Process Management: From Mockup to Execution</h3>
+      <p>In the ever-evolving realm of Manufacturing IT, innovation is the key to staying ahead. The Intelligent Applications Collaboration Framework (IACF)…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/revolutionizing-manufacturing-it-with-iacfs-ai-generated-workflow-capability.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/05/Screenshot-2024-05-22-162936-300x148.png')"></div>
+    <div class="body">
+      <div class="d">2024-05-22</div>
+      <h3>Revolutionizing Manufacturing IT with IACF&#x27;s AI-Generated Workflow Capability</h3>
+      <p>In the rapidly evolving landscape of Manufacturing IT, staying ahead of the curve is imperative. Leveraging advanced technologies like Artificial…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/revolutionizing-manufacturing-it-with-iacfs-ai-generated-code-feature.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/05/Screenshot-2024-05-20-094433-300x158.png')"></div>
+    <div class="body">
+      <div class="d">2024-05-20</div>
+      <h3>Revolutionizing Manufacturing IT with IACF’s AI-Generated Code Feature</h3>
+      <p>In the ever-evolving landscape of manufacturing, efficiency and innovation are paramount. The Integrated Automation and Control Framework (IACF)…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/streamlining-data-management-with-iacfs-jsonmanager-library.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/05/Screenshot-2024-05-11-102523-300x159.png')"></div>
+    <div class="body">
+      <div class="d">2024-05-11</div>
+      <h3>Streamlining Data Management with IACF&#x27;s JsonManager Library</h3>
+      <p>In today&#x27;s fast-paced business environment, agility and adaptability are critical for success. As organizations strive to keep pace with…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-installation-and-deployment.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/04/Screenshot-2024-04-28-144631-300x173.png')"></div>
+    <div class="body">
+      <div class="d">2024-04-28</div>
+      <h3>IACF installation and deployment</h3>
+      <p>Introduction: The Industry Accelerator Framework (IACF) is a comprehensive solution designed to accelerate digital transformation initiatives in the…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-helps-transforming-of-digital-manufacturing.html">
+    
+    <div class="body">
+      <div class="d">2024-04-26</div>
+      <h3>IACF helps transforming of digital manufacturing</h3>
+      <p>In today&#x27;s fast-paced manufacturing landscape, the ability to adapt and innovate is crucial for staying ahead of the competition. Fortunately, the…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iac-ui-web-server-installation-and-build-guide.html">
+    
+    <div class="body">
+      <div class="d">2024-04-24</div>
+      <h3>IAC-UI Web Server: Installation and Build Guide</h3>
+      <p>The IAC-UI web server is a powerful tool that provides a user-friendly interface web portal for the iacf solution. This guide will walk you through…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-application-server-seamless-deployment-and-build-guide.html">
+    
+    <div class="body">
+      <div class="d">2024-04-24</div>
+      <h3>IAC Application Server: Seamless Deployment and Build Guide</h3>
+      <p>The IAC Application Server lies at the heart of the IACF solution, supplying a robust set of core features. This comprehensive guide will walk you…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/release-0-1-roadmap.html">
+    <div class="thumb" style="background-image:url('assets/uploads/2024/04/portal.png')"></div>
+    <div class="body">
+      <div class="d">2024-04-20</div>
+      <h3>Release 0.1 &amp;amp; Roadmap</h3>
+      <p>In the dynamic landscape of manufacturing, efficiency, agility, and scalability are paramount. Introducing #IACF (Integrated Architecture for…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/unleashing-the-power-of-industry-with-the-innovative-iacf-cloud-architecture.html">
+    
+    <div class="body">
+      <div class="d">2024-03-27</div>
+      <h3>Unleashing the Power of Industry with the Innovative IACF Cloud Architecture</h3>
+      <p>In today&#x27;s rapidly evolving industrial landscape, businesses are constantly seeking ways to streamline operations, enhance efficiency, and gain a…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/introducing-iacf-on-the-cloud-a-revolutionary-framework-for-industry-application-acceleration.html">
+    
+    <div class="body">
+      <div class="d">2024-02-27</div>
+      <h3>Introducing IACF on the Cloud: A Revolutionary Framework for Industry Application Acceleration</h3>
+      <p>In the rapidly evolving landscape of industry applications, staying competitive requires innovative solutions that combine efficiency, scalability,…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/introducing-the-integrated-geo-capabilities-of-the-innovative-iacf-framework.html">
+    
+    <div class="body">
+      <div class="d">2023-12-10</div>
+      <h3>Introducing the Integrated geo Capabilities of the Innovative IACF Framework</h3>
+      <p>In the dynamic landscape of today&#x27;s industries, staying ahead of the curve is paramount. The #IACF (Industry Application Framework) has evolved to…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-platform-new-features-transforming-configuration-and-design-with-innovation.html">
+    
+    <div class="body">
+      <div class="d">2023-11-03</div>
+      <h3>IACF Platform new features: Transforming Configuration and Design with Innovation</h3>
+      <p>Welcome to the next evolution of #IACF (Industry Applications Collection Framework)! Our platform is at the forefront of energy management, and…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/revolutionizing-industry-processes-unveiling-iacfs-new-workflow-management-feature.html">
+    
+    <div class="body">
+      <div class="d">2023-10-29</div>
+      <h3>Revolutionizing Industry Processes: Unveiling IACF&#x27;s New Workflow Management Feature</h3>
+      <p>In the dynamic realm of industry applications, efficiency and precision are the pillars of success. Enter the Industry Applications Collection…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/revolutionizing-industry-solutions-iacfs-cutting-edge-notification-and-chat-features.html">
+    
+    <div class="body">
+      <div class="d">2023-10-28</div>
+      <h3>Revolutionizing Industry Solutions: #IACF&#x27;s Cutting-edge Notification and Chat Features</h3>
+      <p>In the ever-evolving landscape of industry applications, adaptability and efficiency are paramount. Enter the Industry Application Collection…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+  <a class="card" href="posts/iacf-energy-management-solution.html">
+    
+    <div class="body">
+      <div class="d">2023-10-27</div>
+      <h3>IACF Energy Management Solution</h3>
+      <p>Welcome to the future of energy management with IACF, a groundbreaking platform designed to revolutionize how organizations monitor, analyze, and…</p>
+      <span class="more">Read article &rarr;</span>
+    </div>
+  </a>
+</div>
 </main>
-<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+<footer><div class="footer-in">
+  <div>IACF — Industry AI Core Framework. Open-source framework for AI in manufacturing.</div>
+  <div>&copy; 2026 IACF</div>
+</div></footer>
 </body>
 </html>
