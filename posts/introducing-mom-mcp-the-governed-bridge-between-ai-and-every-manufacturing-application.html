@@ -4,54 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application — IACF</title>
+<meta name="description" content="IACF — Industry AI Core Framework: agentic AI for smart manufacturing.">
 <style>
-:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
-header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
-.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
-.logo span { color:var(--accent); }
-nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
-nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
-nav.main a:hover { color:var(--accent); }
-main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
-main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
-.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
-article p { margin:0 0 16px; }
-article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
-article ul, article ol { margin:0 0 16px 22px; }
-article img { max-width:100%; height:auto; border-radius:8px; }
-article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
-article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
-article pre code { background:none; padding:0; }
-article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
-article table { border-collapse:collapse; margin-bottom:16px; }
-article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
-ul.postlist { list-style:none; }
-ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
-ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
-ul.postlist a:hover { color:var(--accent); }
-ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
-footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
-footer a { color:var(--sub); }
+:root{
+  --bg:#0a0f1e; --bg2:#0d1526; --panel:#111c33; --panel2:#0f1930;
+  --line:#1e2c4a; --ink:#e8eef9; --sub:#94a7c7; --mut:#64769a;
+  --acc:#38bdf8; --acc2:#818cf8; --grad:linear-gradient(92deg,#38bdf8, #818cf8 55%,#c084fc);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+header.site{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;letter-spacing:3px;color:var(--ink)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-size:9.5px;letter-spacing:2.6px;color:var(--mut);font-weight:600}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 18px}
+nav.main a{color:var(--sub);font-size:14px;font-weight:500}
+nav.main a:hover{color:var(--ink);text-decoration:none}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 480px at 85% -10%,rgba(56,189,248,.16),transparent 60%),radial-gradient(700px 420px at 8% 110%,rgba(129,140,248,.14),transparent 60%),var(--bg2);border-bottom:1px solid var(--line)}
+.hero-in{max-width:1180px;margin:0 auto;padding:84px 24px 72px}
+.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:3px;color:var(--acc);border:1px solid rgba(56,189,248,.4);padding:5px 12px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.5px;max-width:820px}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:20px;font-size:19px;color:var(--sub);max-width:680px}
+.cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:600;font-size:15.5px;background:var(--grad);color:#06101f}
+.btn:hover{text-decoration:none;opacity:.92}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.stats{margin-top:52px;display:flex;gap:44px;flex-wrap:wrap}
+.stat .n{font-size:27px;font-weight:800}
+.stat .l{font-size:12.5px;color:var(--mut);letter-spacing:1.4px;text-transform:uppercase}
+section.blk{max-width:1180px;margin:0 auto;padding:64px 24px 8px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px}
+.sec-head h2{font-size:29px;font-weight:800;letter-spacing:-.3px}
+.sec-head a{font-size:14.5px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-3px);border-color:#2c4470;text-decoration:none}
+.card .thumb{height:168px;background:var(--panel2) center/cover no-repeat;border-bottom:1px solid var(--line)}
+.card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .d{font-size:12.5px;color:var(--acc);font-weight:700;letter-spacing:1.2px}
+.card h3{font-size:17.5px;line-height:1.35;color:var(--ink);font-weight:700}
+.card p{font-size:14px;color:var(--sub);flex:1}
+.card .more{font-size:13.5px;font-weight:600;color:var(--acc)}
+.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+.fcard .ic{font-size:26px;margin-bottom:12px}
+.fcard h3{font-size:18px;margin-bottom:8px}
+.fcard p{font-size:14.5px;color:var(--sub)}
+.about{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 32px;font-size:16.5px;color:#c6d3ea}
+main.page{max-width:860px;margin:0 auto;padding:44px 24px 64px}
+main.page h1{font-size:33px;line-height:1.25;letter-spacing:-.3px;margin-bottom:8px}
+.date{color:var(--acc);font-size:13px;font-weight:700;letter-spacing:1.2px;margin-bottom:26px;text-transform:uppercase}
+article p{margin:0 0 16px;color:#d5deef}
+article h2,article h3,article h4{margin:28px 0 10px;line-height:1.3;color:var(--ink)}
+article ul,article ol{margin:0 0 16px 22px;color:#d5deef}
+article img{max-width:100%;height:auto;border-radius:10px}
+article figure{margin:0 0 18px;color:var(--sub);font-size:13.5px;text-align:center}
+article pre{background:#0a1224;border:1px solid var(--line);padding:14px;border-radius:10px;overflow-x:auto;margin-bottom:16px;font-size:13.5px}
+article code{background:#0a1224;border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.92em}
+article pre code{background:none;border:none;padding:0}
+article blockquote{border-left:3px solid var(--acc);padding-left:14px;color:var(--sub);margin:0 0 16px}
+article table{border-collapse:collapse;margin-bottom:16px}
+article td,article th{border:1px solid var(--line);padding:6px 10px}
+article a{word-break:break-word}
+footer{margin-top:70px;border-top:1px solid var(--line);background:var(--bg2)}
+.footer-in{max-width:1180px;margin:0 auto;padding:34px 24px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;color:var(--mut);font-size:13.5px}
+@media (max-width:640px){.hero h1{font-size:36px}.hero-in{padding:56px 20px 48px}}
 </style>
 </head>
 <body>
-<header class="site">
-  <div class="logo">IACF<span>.</span></div>
+<header class="site"><div class="header-in">
+  <a class="logo" href="../index.html" style="text-decoration:none">IACF<b>.</b><small>INDUSTRY AI CORE FRAMEWORK</small></a>
   <nav class="main">
       <a href="../index.html">Home</a>
       <a href="../pages/what-is-iacf.html">What is IACF</a>
       <a href="../pages/features.html">Features</a>
       <a href="../pages/usecases.html">Use Cases</a>
       <a href="../pages/document.html">Document</a>
-      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Roadmap</a>
       <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../posts.html">Articles</a>
       <a href="../pages/contact-us.html">Contact</a>
-      <a href="../posts.html">All Posts</a>
   </nav>
-</header>
-<main>
+</div></header>
+<main class="page">
+
 <article>
 <h1>Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application</h1>
 <div class="date">2026-10-08</div>
@@ -67,7 +108,7 @@ Most plants have plenty of data and plenty of applications. What they lack is a 
 
 At the same time, the questions people actually ask cut across systems. A late order may be a scheduling issue in MES, a material shortage in ERP, an engineering change in PLM and a customer commitment in CRM, all at once. Point solutions bolted onto one application cannot answer that. MoM-MCP gives AI one governed doorway into all of them.
 <h2>How it works</h2>
-<img class="aligncenter size-full wp-image-318" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-architecture.png" alt="MoM-MCP architecture: AI clients connect over MCP to the MoM-MCP server, which reads from and runs approved actions on MES, ERP, PLM, CRM, QMS and shop-floor systems" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-318" src="../assets/uploads/2026/10/mom-mcp-architecture.png" alt="MoM-MCP architecture: AI clients connect over MCP to the MoM-MCP server, which reads from and runs approved actions on MES, ERP, PLM, CRM, QMS and shop-floor systems" width="1600" height="900" />
 <ul>
  	<li><strong>Read through curated knowledge.</strong> MoM-MCP reads from many databases (SQL Server, Oracle, PostgreSQL, MySQL and more) through parameterized datasets, a curated schema knowledge base and a business glossary that maps plant terminology to the right tables and measures. Ad-hoc questions go through grounded text-to-SQL, and every query passes a read-only (SELECT-only) gate.</li>
  	<li><strong>Reason with skills.</strong> Skills package a manufacturing task (quality root-cause analysis, predictive maintenance, schedule optimization, shift handover and many more) as a prompt, bound data and a validated output shape. The model can be the server's own LLM or the connected client's model.</li>
@@ -83,8 +124,8 @@ At the same time, the questions people actually ask cut across systems. A late o
  	<li>OEE (real-time, baseline and forecast), quality heat maps, materials-shortage prediction and production sequencing views.</li>
  	<li>A sandboxed custom HTML widget for building operator consoles that can only reach the datasets and actions an author explicitly allows.</li>
 </ul>
-<img class="aligncenter size-full wp-image-323" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-dashboard-example.png" alt="MoM-MCP dashboard example with live KPIs, AI insight and recommended actions that a person approves or rejects" width="1600" height="900" />
-<img class="aligncenter size-full wp-image-324" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-dashboard-maintenance.png" alt="MoM-MCP dashboard example with cross-domain KPIs and drill-down tabs by function, showing maintenance KPIs and trends" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-323" src="../assets/uploads/2026/10/mom-mcp-dashboard-example.png" alt="MoM-MCP dashboard example with live KPIs, AI insight and recommended actions that a person approves or rejects" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-324" src="../assets/uploads/2026/10/mom-mcp-dashboard-maintenance.png" alt="MoM-MCP dashboard example with cross-domain KPIs and drill-down tabs by function, showing maintenance KPIs and trends" width="1600" height="900" />
 <h3>Agent Studio and chat</h3>
 <ul>
  	<li>A conversational agent that plans across skills, datasets, text-to-SQL and knowledge-base lookups, and can turn an answer into a draft dashboard or a recommended action.</li>
@@ -100,7 +141,7 @@ At the same time, the questions people actually ask cut across systems. A late o
 <h3>Model choice</h3>
 A configuration-driven provider registry supports Anthropic, OpenAI, Azure OpenAI, AWS Bedrock, Google Vertex AI, Ollama and other OpenAI-compatible endpoints. MoM-MCP can also run with no server-side model at all by borrowing the connected client's model through MCP sampling.
 <h2>Editions</h2>
-<img class="aligncenter size-full wp-image-322" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-editions-1.png" alt="MoM-MCP editions compared: MoM-MCP, MoM-MCP Lite and MoM Portal" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-322" src="../assets/uploads/2026/10/mom-mcp-editions-1.png" alt="MoM-MCP editions compared: MoM-MCP, MoM-MCP Lite and MoM Portal" width="1600" height="900" />
 <ul>
  	<li><strong>MoM-MCP (full).</strong> The complete design and runtime environment: admin UI, entity authoring and versioning, server-side AI, the built-in Agent Studio and observability.</li>
  	<li><strong>MoM-MCP Lite.</strong> A runtime edition for running packaged solutions. It keeps the same MCP server and REST API for datasets, connections, flows, pipelines and scheduled jobs, and it includes server-side LLM capability. What it leaves out is authoring: templates, datasets, dashboards, skills and authorization can't be created or configured on it. Instead, its configuration is imported from a packaged solution exported from the full MoM-MCP.</li>
@@ -116,7 +157,7 @@ A configuration-driven provider registry supports Anthropic, OpenAI, Azure OpenA
  	<li>Offline, signed license keys bound to the deployment's domain or machine, with capabilities (dashboards, datasets, skills, actions, sequencing) enabled per license. Evaluation licenses are available.</li>
 </ul>
 <h2>Example use cases</h2>
-<img class="aligncenter size-full wp-image-320" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-use-cases.png" alt="MoM-MCP use cases: shift start, material risk, quality response, maintenance, executive view and cross-system questions" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-320" src="../assets/uploads/2026/10/mom-mcp-use-cases.png" alt="MoM-MCP use cases: shift start, material risk, quality response, maintenance, executive view and cross-system questions" width="1600" height="900" />
 <ul>
  	<li><strong>Shift start.</strong> A supervisor asks what changed overnight and gets a summary of downtime, quality alerts and at-risk orders, with recommended actions to approve.</li>
  	<li><strong>Material risk.</strong> Planners see which components will run short against planned orders, when to order them, and an AI view of expedite options drawn from ERP and MES data.</li>
@@ -130,7 +171,11 @@ MoM-MCP runs as a Linux container (Docker Compose, with built-in Prometheus moni
 
 IACF can help you map your applications and priorities to MoM-MCP, set up an evaluation and plan a pilot. To learn more or request a demo, email <a href="mailto:info@iacf.us">info@iacf.us</a> or visit <a href="../index.html">www.iacf.us</a>.
 </article>
+
 </main>
-<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+<footer><div class="footer-in">
+  <div>IACF — Industry AI Core Framework. Open-source framework for AI in manufacturing.</div>
+  <div>&copy; 2026 IACF</div>
+</div></footer>
 </body>
 </html>

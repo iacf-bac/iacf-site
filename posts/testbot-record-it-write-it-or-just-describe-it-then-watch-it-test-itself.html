@@ -4,54 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>From first recording to signed-off release: the life of a test in Testbot — IACF</title>
+<meta name="description" content="IACF — Industry AI Core Framework: agentic AI for smart manufacturing.">
 <style>
-:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
-header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
-.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
-.logo span { color:var(--accent); }
-nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
-nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
-nav.main a:hover { color:var(--accent); }
-main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
-main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
-.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
-article p { margin:0 0 16px; }
-article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
-article ul, article ol { margin:0 0 16px 22px; }
-article img { max-width:100%; height:auto; border-radius:8px; }
-article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
-article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
-article pre code { background:none; padding:0; }
-article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
-article table { border-collapse:collapse; margin-bottom:16px; }
-article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
-ul.postlist { list-style:none; }
-ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
-ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
-ul.postlist a:hover { color:var(--accent); }
-ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
-footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
-footer a { color:var(--sub); }
+:root{
+  --bg:#0a0f1e; --bg2:#0d1526; --panel:#111c33; --panel2:#0f1930;
+  --line:#1e2c4a; --ink:#e8eef9; --sub:#94a7c7; --mut:#64769a;
+  --acc:#38bdf8; --acc2:#818cf8; --grad:linear-gradient(92deg,#38bdf8, #818cf8 55%,#c084fc);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+header.site{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header-in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;letter-spacing:3px;color:var(--ink)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-size:9.5px;letter-spacing:2.6px;color:var(--mut);font-weight:600}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 18px}
+nav.main a{color:var(--sub);font-size:14px;font-weight:500}
+nav.main a:hover{color:var(--ink);text-decoration:none}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 480px at 85% -10%,rgba(56,189,248,.16),transparent 60%),radial-gradient(700px 420px at 8% 110%,rgba(129,140,248,.14),transparent 60%),var(--bg2);border-bottom:1px solid var(--line)}
+.hero-in{max-width:1180px;margin:0 auto;padding:84px 24px 72px}
+.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:3px;color:var(--acc);border:1px solid rgba(56,189,248,.4);padding:5px 12px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.5px;max-width:820px}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:20px;font-size:19px;color:var(--sub);max-width:680px}
+.cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:600;font-size:15.5px;background:var(--grad);color:#06101f}
+.btn:hover{text-decoration:none;opacity:.92}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.stats{margin-top:52px;display:flex;gap:44px;flex-wrap:wrap}
+.stat .n{font-size:27px;font-weight:800}
+.stat .l{font-size:12.5px;color:var(--mut);letter-spacing:1.4px;text-transform:uppercase}
+section.blk{max-width:1180px;margin:0 auto;padding:64px 24px 8px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px}
+.sec-head h2{font-size:29px;font-weight:800;letter-spacing:-.3px}
+.sec-head a{font-size:14.5px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-3px);border-color:#2c4470;text-decoration:none}
+.card .thumb{height:168px;background:var(--panel2) center/cover no-repeat;border-bottom:1px solid var(--line)}
+.card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .d{font-size:12.5px;color:var(--acc);font-weight:700;letter-spacing:1.2px}
+.card h3{font-size:17.5px;line-height:1.35;color:var(--ink);font-weight:700}
+.card p{font-size:14px;color:var(--sub);flex:1}
+.card .more{font-size:13.5px;font-weight:600;color:var(--acc)}
+.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+.fcard .ic{font-size:26px;margin-bottom:12px}
+.fcard h3{font-size:18px;margin-bottom:8px}
+.fcard p{font-size:14.5px;color:var(--sub)}
+.about{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 32px;font-size:16.5px;color:#c6d3ea}
+main.page{max-width:860px;margin:0 auto;padding:44px 24px 64px}
+main.page h1{font-size:33px;line-height:1.25;letter-spacing:-.3px;margin-bottom:8px}
+.date{color:var(--acc);font-size:13px;font-weight:700;letter-spacing:1.2px;margin-bottom:26px;text-transform:uppercase}
+article p{margin:0 0 16px;color:#d5deef}
+article h2,article h3,article h4{margin:28px 0 10px;line-height:1.3;color:var(--ink)}
+article ul,article ol{margin:0 0 16px 22px;color:#d5deef}
+article img{max-width:100%;height:auto;border-radius:10px}
+article figure{margin:0 0 18px;color:var(--sub);font-size:13.5px;text-align:center}
+article pre{background:#0a1224;border:1px solid var(--line);padding:14px;border-radius:10px;overflow-x:auto;margin-bottom:16px;font-size:13.5px}
+article code{background:#0a1224;border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.92em}
+article pre code{background:none;border:none;padding:0}
+article blockquote{border-left:3px solid var(--acc);padding-left:14px;color:var(--sub);margin:0 0 16px}
+article table{border-collapse:collapse;margin-bottom:16px}
+article td,article th{border:1px solid var(--line);padding:6px 10px}
+article a{word-break:break-word}
+footer{margin-top:70px;border-top:1px solid var(--line);background:var(--bg2)}
+.footer-in{max-width:1180px;margin:0 auto;padding:34px 24px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;color:var(--mut);font-size:13.5px}
+@media (max-width:640px){.hero h1{font-size:36px}.hero-in{padding:56px 20px 48px}}
 </style>
 </head>
 <body>
-<header class="site">
-  <div class="logo">IACF<span>.</span></div>
+<header class="site"><div class="header-in">
+  <a class="logo" href="../index.html" style="text-decoration:none">IACF<b>.</b><small>INDUSTRY AI CORE FRAMEWORK</small></a>
   <nav class="main">
       <a href="../index.html">Home</a>
       <a href="../pages/what-is-iacf.html">What is IACF</a>
       <a href="../pages/features.html">Features</a>
       <a href="../pages/usecases.html">Use Cases</a>
       <a href="../pages/document.html">Document</a>
-      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Roadmap</a>
       <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../posts.html">Articles</a>
       <a href="../pages/contact-us.html">Contact</a>
-      <a href="../posts.html">All Posts</a>
   </nav>
-</header>
-<main>
+</div></header>
+<main class="page">
+
 <article>
 <h1>From first recording to signed-off release: the life of a test in Testbot</h1>
 <div class="date">2026-10-10</div>
@@ -60,7 +101,7 @@ footer a { color:var(--sub); }
 <p style="font-size:19px;line-height:1.6;color:#3b4a5c;margin:0 0 20px;">The <a href="../posts/change-is-safe-only-when-the-whole-process-is-retested.html">October 5 article</a> explained why a change is safe only when the whole process is retested. This one follows a single test through Testbot, from the first recording to a release someone can sign off: where the test comes from, what each run leaves behind, and how the test stays current once the application starts changing.</p>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/diagram.png" alt="The life of a test in testbot: author, run, evidence, review and maintain" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/diagram.png" alt="The life of a test in testbot: author, run, evidence, review and maintain" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">One test file goes through four stages. A change that someone accepts becomes the next default revision.</figcaption>
 </figure>
 
@@ -101,12 +142,12 @@ footer a { color:var(--sub); }
 </table>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-1-recorded-test-in-editor.png" alt="A recorded test case open in the testbot manager editor" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-1-recorded-test-in-editor.png" alt="A recorded test case open in the testbot manager editor" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">A recorded login test, opened in the manager's editor. The recorder chose readable targets (label, role and name) and added a URL check after each page change.</figcaption>
 </figure>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-2-import-excel-mapping.png" alt="Import page mapping the columns of a manual test spreadsheet" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-2-import-excel-mapping.png" alt="Import page mapping the columns of a manual test spreadsheet" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Importing a spreadsheet that is not in testbot format. Both tabs become test cases; the columns are matched by name and you correct the rest.</figcaption>
 </figure>
 
@@ -142,12 +183,12 @@ footer a { color:var(--sub); }
 </table>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-3-case-history-and-step-evidence.png" alt="Results for one test case: every run, and the steps of the failed run with expected, actual and screenshots" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-3-case-history-and-step-evidence.png" alt="Results for one test case: every run, and the steps of the failed run with expected, actual and screenshots" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">One test case across five runs, as a suite and inside a nightly session. The failed run is open: step 4 expected <code>/secure</code> and stayed on <code>/login</code>. One earlier run ended in a page-load timeout, and it is recorded as an error, not as a failure.</figcaption>
 </figure>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-4-html-report-sample-suite.png" alt="HTML report of the sample suite" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-4-html-report-sample-suite.png" alt="HTML report of the sample suite" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">The HTML report of the sample suite that ships with Testbot. TC-001 passes. TC-002 is a SQL example that needs a database connection, and the report says exactly that.</figcaption>
 </figure>
 
@@ -169,7 +210,7 @@ footer a { color:var(--sub); }
 </div>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-5-schedules.png" alt="Schedules page with a nightly regression and a smoke-test schedule" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-5-schedules.png" alt="Schedules page with a nightly regression and a smoke-test schedule" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Two schedules: a nightly regression session and the smoke-tagged recorded test every two hours. The scheduler is a separate background program and needs nothing but the workspace files.</figcaption>
 </figure>
 
@@ -184,7 +225,7 @@ footer a { color:var(--sub); }
 </table>
 
 <figure style="margin:28px 0;">
-<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-6-company-network-settings.png" alt="Settings: company root certificates and proxy" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<img src="../assets/uploads/2026/10/shot-6-company-network-settings.png" alt="Settings: company root certificates and proxy" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
 <figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Settings, company network: root certificate files, the operating system's certificate store, a proxy, and a button that tests the connection to the AI service.</figcaption>
 </figure>
 
@@ -208,7 +249,11 @@ python scripts/manager.py</pre>
 <p style="font-size:14px;color:#66768a;border-top:1px solid #d9dee6;padding-top:12px;margin-top:24px;">All screens in this article are from testbot 0.1.1.1, running the repository's own examples, a test recorded against a public practice site, and a two-tab spreadsheet made for the import example. Nothing was edited into the images.</p>
 </div>
 </article>
+
 </main>
-<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+<footer><div class="footer-in">
+  <div>IACF — Industry AI Core Framework. Open-source framework for AI in manufacturing.</div>
+  <div>&copy; 2026 IACF</div>
+</div></footer>
 </body>
 </html>
