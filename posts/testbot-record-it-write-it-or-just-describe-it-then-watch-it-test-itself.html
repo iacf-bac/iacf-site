@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From first recording to signed-off release: the life of a test in Testbot — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>From first recording to signed-off release: the life of a test in Testbot</h1>
+<div class="date">2026-10-10</div>
+<div style="font-size:17px;line-height:1.65;color:#1c2733;">
+
+<p style="font-size:19px;line-height:1.6;color:#3b4a5c;margin:0 0 20px;">The <a href="../posts/change-is-safe-only-when-the-whole-process-is-retested.html">October 5 article</a> explained why a change is safe only when the whole process is retested. This one follows a single test through Testbot, from the first recording to a release someone can sign off: where the test comes from, what each run leaves behind, and how the test stays current once the application starts changing.</p>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/diagram.png" alt="The life of a test in testbot: author, run, evidence, review and maintain" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">One test file goes through four stages. A change that someone accepts becomes the next default revision.</figcaption>
+</figure>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">Mission and vision</h2>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 8px;">
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-left:4px solid #005386;border-radius:8px;padding:16px 20px;">
+<p style="margin:0 0 6px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#005386;font-weight:700;">Mission</p>
+<p style="margin:0;">Let the people who know a business process turn that knowledge into repeatable tests, and give everyone who approves a release evidence they can check.</p>
+</div>
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-left:4px solid #0077c8;border-radius:8px;padding:16px 20px;">
+<p style="margin:0 0 6px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#0077c8;font-weight:700;">Vision</p>
+<p style="margin:0;">Tests are written once, run on every change, and kept current as the application changes. AI proposes the updates. People approve them.</p>
+</div>
+</div>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">1. How a test is born</h2>
+<p>A test can start in four places. All four produce the same thing: a suite file (JSON or Excel) that the runner, the manager and the scheduler all read.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;margin:12px 0 20px;">
+<tr style="background:#005386;color:#ffffff;">
+<th style="text-align:left;padding:10px 12px;">Starting point</th><th style="text-align:left;padding:10px 12px;">What you do</th><th style="text-align:left;padding:10px 12px;">What you get</th></tr>
+<tr style="border-bottom:1px solid #d9dee6;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">testbot recorder</td>
+<td style="padding:10px 12px;vertical-align:top;">Enter the start address and use the application. Clicks, typed values, selects and page changes appear as steps.</td>
+<td style="padding:10px 12px;vertical-align:top;">A JSON suite, an Excel workbook, or a plain Playwright script. Passwords are saved as a <code>{password}</code> variable, never as typed text.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Excel or JSON</td>
+<td style="padding:10px 12px;vertical-align:top;">Write the steps yourself. The Excel layout follows Azure DevOps test case fields: one sheet per case, shared data on a CommonData sheet.</td>
+<td style="padding:10px 12px;vertical-align:top;">Test data from SQL, generated values or constants, defined once and used by every case.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Import</td>
+<td style="padding:10px 12px;vertical-align:top;">Load an existing spreadsheet in any layout and map its columns. Each ticked tab becomes one test case. Apriso AutomaticTest scenarios are converted with an editable control map.</td>
+<td style="padding:10px 12px;vertical-align:top;">Test cases you already have, without retyping them. For Apriso scenarios, credentials in the source file are not copied.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Plain language</td>
+<td style="padding:10px 12px;vertical-align:top;">Describe the change in the editor's Chat tab, or write an objective and the expected outcome for the agentic mode.</td>
+<td style="padding:10px 12px;vertical-align:top;">A proposal shown as a step-by-step diff, which you apply, save as a draft or dismiss. Needs an AI provider key. The agentic mode is a pilot.</td></tr>
+</table>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-1-recorded-test-in-editor.png" alt="A recorded test case open in the testbot manager editor" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">A recorded login test, opened in the manager's editor. The recorder chose readable targets (label, role and name) and added a URL check after each page change.</figcaption>
+</figure>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-2-import-excel-mapping.png" alt="Import page mapping the columns of a manual test spreadsheet" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Importing a spreadsheet that is not in testbot format. Both tabs become test cases; the columns are matched by name and you correct the rest.</figcaption>
+</figure>
+
+<h3 style="font-size:20px;margin:28px 0 8px;">The test we followed for this article</h3>
+<p>We recorded a log-in and log-out on a public practice site (the-internet.herokuapp.com) and ran it without editing anything. It failed at step 4, and it should have: the recorder stores the password as <code>{password}</code> with the placeholder <code>CHANGE_ME</code>, so the site refused the login. The report said what was expected (<code>/secure</code>), what actually happened (still on <code>/login</code>), and the step 4 screenshot showed the site's "Your password is invalid!" message. We filled in the value, added a check on the welcome message, and the run after the fix passed.</p>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">2. What every run leaves behind</h2>
+<p>Whether it is started from the command line, the manager, a schedule or a build pipeline, a run writes the same set of files. Nothing has to be collected by hand afterwards.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;margin:12px 0 20px;">
+<tr style="background:#005386;color:#ffffff;">
+<th style="text-align:left;padding:10px 12px;">Output</th><th style="text-align:left;padding:10px 12px;">What is in it</th><th style="text-align:left;padding:10px 12px;">Who uses it</th></tr>
+<tr style="border-bottom:1px solid #d9dee6;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Step screenshots</td>
+<td style="padding:10px 12px;vertical-align:top;">One per step, for passing and failing steps, in a new folder for each run so earlier evidence is never overwritten.</td>
+<td style="padding:10px 12px;vertical-align:top;">Tester, reviewer, auditor</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">HTML report</td>
+<td style="padding:10px 12px;vertical-align:top;">Final result first, then every step: description, action, data used, status, expected against actual, error and a link to the screenshot. Secrets show as <code>***</code>.</td>
+<td style="padding:10px 12px;vertical-align:top;">Anyone, with no tools installed</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">JUnit XML</td>
+<td style="padding:10px 12px;vertical-align:top;">The format Azure Pipelines' "Publish Test Results" task reads into the Azure DevOps Tests tab.</td>
+<td style="padding:10px 12px;vertical-align:top;">Build pipeline, release gate</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Result JSON and run log</td>
+<td style="padding:10px 12px;vertical-align:top;">A machine-readable record of the run, in the same order as the test, plus one log line per step with level filters.</td>
+<td style="padding:10px 12px;vertical-align:top;">The manager, scripts, troubleshooting</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;">
+<td style="padding:10px 12px;font-weight:600;vertical-align:top;">Exit code</td>
+<td style="padding:10px 12px;vertical-align:top;"><code>0</code> when every case passed, <code>1</code> otherwise.</td>
+<td style="padding:10px 12px;vertical-align:top;">Any CI system, as a gate</td></tr>
+</table>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-3-case-history-and-step-evidence.png" alt="Results for one test case: every run, and the steps of the failed run with expected, actual and screenshots" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">One test case across five runs, as a suite and inside a nightly session. The failed run is open: step 4 expected <code>/secure</code> and stayed on <code>/login</code>. One earlier run ended in a page-load timeout, and it is recorded as an error, not as a failure.</figcaption>
+</figure>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-4-html-report-sample-suite.png" alt="HTML report of the sample suite" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">The HTML report of the sample suite that ships with Testbot. TC-001 passes. TC-002 is a SQL example that needs a database connection, and the report says exactly that.</figcaption>
+</figure>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">3. Keeping the test alive</h2>
+<p>A test is worth most after the first release, when the application keeps changing. These are the parts that keep it running and keep it accurate.</p>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin:12px 0 8px;">
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-radius:8px;padding:16px 20px;">
+<h3 style="font-size:18px;margin:0 0 6px;color:#005386;">Sessions and schedules</h3>
+<p style="margin:0;">Put cases from several files in one ordered session, optionally in the same logged-in browser. Run it daily, weekly, at an interval or by hand, and get an email when it completes.</p></div>
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-radius:8px;padding:16px 20px;">
+<h3 style="font-size:18px;margin:0 0 6px;color:#005386;">Revisions</h3>
+<p style="margin:0;">Every saved change is a revision of the suite and the case. Only the default revision runs, and the run records which revision it used.</p></div>
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-radius:8px;padding:16px 20px;">
+<h3 style="font-size:18px;margin:0 0 6px;color:#005386;">Recommendations</h3>
+<p style="margin:0;">With an AI provider configured, a passing run can suggest better steps, and a target that moved gets a proposed fix. You replace, merge or skip. Nothing changes by itself.</p></div>
+<div style="flex:1 1 300px;background:#ffffff;border:1px solid #d9dee6;border-radius:8px;padding:16px 20px;">
+<h3 style="font-size:18px;margin:0 0 6px;color:#005386;">Sign-off</h3>
+<p style="margin:0;">A test group tracks a test effort such as UAT: final results, manual results, "run what has not passed", then close the cycle and export the report.</p></div>
+</div>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-5-schedules.png" alt="Schedules page with a nightly regression and a smoke-test schedule" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Two schedules: a nightly regression session and the smoke-tagged recorded test every two hours. The scheduler is a separate background program and needs nothing but the workspace files.</figcaption>
+</figure>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">4. Ready for a company network</h2>
+<p>Test tools often stop at the company firewall. Testbot was built to run where the applications under test actually live.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px;margin:12px 0 20px;">
+<tr style="background:#005386;color:#ffffff;"><th style="text-align:left;padding:10px 12px;width:32%;">Concern</th><th style="text-align:left;padding:10px 12px;">How Testbot handles it</th></tr>
+<tr style="border-bottom:1px solid #d9dee6;"><td style="padding:10px 12px;font-weight:600;vertical-align:top;">Installation</td><td style="padding:10px 12px;">One Windows application folder: testbot (runner), testbot-recorder and testbot-manager share one copy of Python, the libraries and Chromium. Nothing is downloaded at run time and nothing is unpacked to the temp folder at start-up.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;"><td style="padding:10px 12px;font-weight:600;vertical-align:top;">HTTPS inspection</td><td style="padding:10px 12px;">REST steps and AI calls trust the operating system's certificate store plus any company root certificates you name (.pem, .crt, .cer). A proxy can be set, or HTTPS_PROXY is used. The manager passes these settings to the runs it starts.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;"><td style="padding:10px 12px;font-weight:600;vertical-align:top;">The manager</td><td style="padding:10px 12px;">Listens on 127.0.0.1 only, needs a per-launch access token, and keeps every file path inside the workspace folders.</td></tr>
+<tr style="border-bottom:1px solid #d9dee6;background:#f4f6f9;"><td style="padding:10px 12px;font-weight:600;vertical-align:top;">Secrets</td><td style="padding:10px 12px;">API keys come from environment variables or a .env file and are never saved by the manager. Passwords are variables and are masked in reports and logs.</td></tr>
+</table>
+
+<figure style="margin:28px 0;">
+<img src="http://www.iacf.us/wp-content/uploads/2026/10/shot-6-company-network-settings.png" alt="Settings: company root certificates and proxy" style="width:100%;height:auto;border:1px solid #d9dee6;border-radius:8px;" />
+<figcaption style="font-size:14px;color:#66768a;margin-top:8px;text-align:center;">Settings, company network: root certificate files, the operating system's certificate store, a proxy, and a button that tests the connection to the AI service.</figcaption>
+</figure>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">What it does not do yet</h2>
+<ul style="margin:0 0 16px 20px;padding:0;">
+<li>Chromium only, and test cases run one after another. Load tests use separate worker processes.</li>
+<li>Azure DevOps results go in through JUnit XML. Pulling test plans from Azure DevOps and pushing results through its REST API are not built.</li>
+<li>The packaged build is for Windows x64, and the executables are not code-signed.</li>
+<li>The recorder does not capture hover, drag or right-click, and elements inside iframes are recorded but not found by the runner as recorded.</li>
+<li>Message-bus steps are tested against a real MQTT broker; AMQP and Kafka are not yet.</li>
+<li>The agentic features are a pilot. Use them to propose and review; keep scripted tests as the record.</li>
+</ul>
+
+<h2 style="font-size:26px;margin:36px 0 12px;">Try it</h2>
+<p>Testbot is open source under the Apache-2.0 licence. From source:</p>
+<pre style="background:#1c2733;color:#e4e9ef;padding:14px 16px;border-radius:8px;font-size:14px;line-height:1.5;overflow-x:auto;">pip install -e .
+playwright install chromium
+python scripts/run_suite.py --suite test_cases/examples/sample_suite.json --env demo
+python scripts/manager.py</pre>
+<p>Code, user manual and examples: <a href="https://github.com/mdaxf/testbot">github.com/mdaxf/testbot</a></p>
+<p style="font-size:14px;color:#66768a;border-top:1px solid #d9dee6;padding-top:12px;margin-top:24px;">All screens in this article are from testbot 0.1.1.1, running the repository's own examples, a test recorded against a public practice site, and a two-tab spreadsheet made for the import example. Nothing was edited into the images.</p>
+</div>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

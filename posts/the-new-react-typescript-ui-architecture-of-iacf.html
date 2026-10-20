@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New React + TypeScript UI Architecture of IACF — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>The New React + TypeScript UI Architecture of IACF</h1>
+<div class="date">2025-11-24</div>
+<p data-start="5545" data-end="5922">The IACF UI has undergone a complete modernization, resulting in a robust, modular, and extensible front-end framework engineered for enterprise manufacturing applications. This updated architecture combines <strong data-start="5753" data-end="5762">React</strong>, <strong data-start="5764" data-end="5778">TypeScript</strong>, <strong data-start="5780" data-end="5808">modular component design</strong>, and <strong data-start="5814" data-end="5847">dynamic runtime configuration</strong> to enable high-performing and rapidly deployable manufacturing interfaces.</p>
+
+
+<hr data-start="5924" data-end="5927" />
+
+<h2 data-start="5929" data-end="5978"><strong data-start="5932" data-end="5978">Modern UI Foundations for Enterprise Scale</strong></h2>
+<h3 data-start="5980" data-end="6011"><strong data-start="5984" data-end="6011">React + TypeScript Core</strong></h3>
+<p data-start="6012" data-end="6036">The framework leverages:</p>
+
+<ul data-start="6037" data-end="6277">
+ 	<li data-start="6037" data-end="6070">
+<p data-start="6039" data-end="6070"><strong data-start="6039" data-end="6070">React functional components</strong></p>
+</li>
+ 	<li data-start="6071" data-end="6101">
+<p data-start="6073" data-end="6101"><strong data-start="6073" data-end="6101">TypeScript strict typing</strong></p>
+</li>
+ 	<li data-start="6102" data-end="6140">
+<p data-start="6104" data-end="6140"><strong data-start="6104" data-end="6140">Hooks-based lifecycle management</strong></p>
+</li>
+ 	<li data-start="6141" data-end="6202">
+<p data-start="6143" data-end="6202"><strong data-start="6143" data-end="6202">Redux or Zustand (depending on module) state management</strong></p>
+</li>
+ 	<li data-start="6203" data-end="6240">
+<p data-start="6205" data-end="6240"><strong data-start="6205" data-end="6240">Dynamic schema-driven rendering</strong></p>
+</li>
+ 	<li data-start="6241" data-end="6277">
+<p data-start="6243" data-end="6277"><strong data-start="6243" data-end="6277">SignalR real-time connectivity</strong></p>
+</li>
+</ul>
+<p data-start="6279" data-end="6379">This architecture ensures predictable data flow, safer code, and maintainability across large teams.</p>
+
+
+<hr data-start="6381" data-end="6384" />
+
+<h2 data-start="6386" data-end="6422"><strong data-start="6389" data-end="6422">Schema-Driven UI Architecture</strong></h2>
+<figure><img class=" wp-image-246" src="http://www.iacf.us/wp-content/uploads/2025/11/Screenshot-2025-11-24-104845-300x185.png" alt="Schema driven UI" width="334" height="206" /> Schema driven UI</figure>
+<p data-start="6424" data-end="6500">One of IACF UI’s defining strengths is its <strong data-start="6467" data-end="6499">dynamic UI generation engine</strong>.</p>
+
+<h3 data-start="6502" data-end="6529"><strong data-start="6506" data-end="6529">Key Characteristics</strong></h3>
+<ul data-start="6530" data-end="6856">
+ 	<li data-start="6530" data-end="6628">
+<p data-start="6532" data-end="6628">Screens, pages, tabs, grids, inputs, and logic are <strong data-start="6583" data-end="6627">defined in database-driven configuration</strong>.</p>
+</li>
+ 	<li data-start="6629" data-end="6695">
+<p data-start="6631" data-end="6695">React components <strong data-start="6648" data-end="6683">interpret configuration schemas</strong> at runtime.</p>
+</li>
+ 	<li data-start="6696" data-end="6765">
+<p data-start="6698" data-end="6765">New screens can be deployed without recompiling the UI application.</p>
+</li>
+ 	<li data-start="6766" data-end="6856">
+<p data-start="6768" data-end="6856">Conditional rendering, event bindings, data queries, and actions are stored as metadata.</p>
+</li>
+</ul>
+<p data-start="6858" data-end="6897">This creates a truly low-code UI layer.</p>
+<p data-start="6858" data-end="6897"></p>
+
+<h2 data-start="6904" data-end="6941"><strong data-start="6907" data-end="6941">Component-Based Modular Design</strong></h2>
+<p data-start="6943" data-end="6986">The UI is built around reusable components:</p>
+
+<ul data-start="6987" data-end="7218">
+ 	<li data-start="6987" data-end="7004">
+<p data-start="6989" data-end="7004">Dynamic forms</p>
+</li>
+ 	<li data-start="7005" data-end="7026">
+<p data-start="7007" data-end="7026">Multi-tab layouts</p>
+</li>
+ 	<li data-start="7027" data-end="7054">
+<p data-start="7029" data-end="7054">Configurable data grids</p>
+</li>
+ 	<li data-start="7055" data-end="7075">
+<p data-start="7057" data-end="7075">Role-based menus</p>
+</li>
+ 	<li data-start="7076" data-end="7125">
+<p data-start="7078" data-end="7125">SignalR-driven real-time messaging components</p>
+</li>
+ 	<li data-start="7126" data-end="7154">
+<p data-start="7128" data-end="7154">KPI tiles and dashboards</p>
+</li>
+ 	<li data-start="7155" data-end="7182">
+<p data-start="7157" data-end="7182">Workflow-driven screens</p>
+</li>
+ 	<li data-start="7183" data-end="7218">
+<p data-start="7185" data-end="7218">Configurable modal interactions</p>
+</li>
+</ul>
+<p data-start="7220" data-end="7322">Each component is versioned and reusable across applications, ensuring consistency and faster rollout.</p>
+
+
+<hr data-start="7324" data-end="7327" />
+
+<h2 data-start="7329" data-end="7374"><strong data-start="7332" data-end="7374">Real-Time Manufacturing-Ready Features</strong></h2>
+<h3 data-start="7376" data-end="7403"><strong data-start="7380" data-end="7403">SignalR Integration</strong></h3>
+<p data-start="7404" data-end="7475">The UI maintains two-way real-time communication with backend services:</p>
+
+<ul data-start="7476" data-end="7625">
+ 	<li data-start="7476" data-end="7501">
+<p data-start="7478" data-end="7501">Live equipment status</p>
+</li>
+ 	<li data-start="7502" data-end="7527">
+<p data-start="7504" data-end="7527">Operator instructions</p>
+</li>
+ 	<li data-start="7528" data-end="7549">
+<p data-start="7530" data-end="7549">Material movement</p>
+</li>
+ 	<li data-start="7550" data-end="7588">
+<p data-start="7552" data-end="7588">in-progress workflow notifications</p>
+</li>
+ 	<li data-start="7589" data-end="7625">
+<p data-start="7591" data-end="7625">Live quality inspection triggers</p>
+</li>
+</ul>
+<p data-start="7627" data-end="7685">This makes the UI suitable for production-floor execution.</p>
+
+<h3 data-start="7687" data-end="7714"><strong data-start="7691" data-end="7714">Role-Based Behavior</strong></h3>
+<p data-start="7715" data-end="7766">All actions, views, and menus adapt dynamically to:</p>
+
+<ul data-start="7767" data-end="7866">
+ 	<li data-start="7767" data-end="7780">
+<p data-start="7769" data-end="7780">User role</p>
+</li>
+ 	<li data-start="7781" data-end="7801">
+<p data-start="7783" data-end="7801">Permission group</p>
+</li>
+ 	<li data-start="7802" data-end="7830">
+<p data-start="7804" data-end="7830">Assigned plant/area/cell</p>
+</li>
+ 	<li data-start="7831" data-end="7866">
+<p data-start="7833" data-end="7866">Specific task or responsibility</p>
+</li>
+</ul>
+
+<hr data-start="7868" data-end="7871" />
+
+<h2 data-start="7873" data-end="7920"><strong data-start="7876" data-end="7920">Integrated AI Assistants in the UI Layer</strong></h2>
+<p data-start="7922" data-end="7979">The latest version embeds AI into the front-end workflow.</p>
+
+<h3 data-start="7981" data-end="8013"><strong data-start="7985" data-end="8013">1. Embedded AI Bot Panel</strong></h3>
+<p data-start="8014" data-end="8058">Accessible from anywhere in the application:</p>
+
+<ul data-start="8059" data-end="8212">
+ 	<li data-start="8059" data-end="8087">
+<p data-start="8061" data-end="8087">Provides contextual help</p>
+</li>
+ 	<li data-start="8088" data-end="8137">
+<p data-start="8090" data-end="8137">Understands UI definitions and business rules</p>
+</li>
+ 	<li data-start="8138" data-end="8171">
+<p data-start="8140" data-end="8171">Answers operational questions</p>
+</li>
+ 	<li data-start="8172" data-end="8212">
+<p data-start="8174" data-end="8212">Guides users through complex screens</p>
+</li>
+</ul>
+<h3 data-start="8214" data-end="8246"><strong data-start="8218" data-end="8246">2. AI for BI &amp; Reporting</strong></h3>
+<p data-start="8247" data-end="8265">Users can request:</p>
+
+<ul data-start="8266" data-end="8350">
+ 	<li data-start="8266" data-end="8284">
+<p data-start="8268" data-end="8284">Dynamic charts</p>
+</li>
+ 	<li data-start="8285" data-end="8303">
+<p data-start="8287" data-end="8303">Trend analysis</p>
+</li>
+ 	<li data-start="8304" data-end="8350">
+<p data-start="8306" data-end="8350">KPI breakdowns<br data-start="8320" data-end="8323" />by simply typing questions.</p>
+</li>
+</ul>
+<h3 data-start="8352" data-end="8387"><strong data-start="8356" data-end="8387">3. AI for UI/BPM Definition</strong></h3>
+<p data-start="8388" data-end="8462">Admins can create screens, workflows, and logic through guided AI prompts.</p>
+
+
+<figure><img class="size-medium wp-image-238" src="http://www.iacf.us/wp-content/uploads/2025/11/Screenshot-2025-11-24-103732-300x185.png" alt="AI assistant" width="300" height="185" /> AI assistant</figure>
+<h3 data-start="8464" data-end="8504"><strong data-start="8468" data-end="8504">4. AI for Workflow Configuration</strong></h3>
+<p data-start="8505" data-end="8594">User descriptions are turned into working sequences, status transitions, and event rules.</p>
+
+<h3 data-start="8596" data-end="8637"><strong data-start="8600" data-end="8637">5. AI-Driven UI/Logic Prototyping</strong></h3>
+<p data-start="8638" data-end="8654">The UI supports:</p>
+
+<ul data-start="8655" data-end="8732">
+ 	<li data-start="8655" data-end="8680">
+<p data-start="8657" data-end="8680">Diagram visualization</p>
+</li>
+ 	<li data-start="8681" data-end="8701">
+<p data-start="8683" data-end="8701">Logic generation</p>
+</li>
+ 	<li data-start="8702" data-end="8732">
+<p data-start="8704" data-end="8732">Screen prototype rendering</p>
+</li>
+</ul>
+<h3 data-start="8734" data-end="8786"><strong data-start="8738" data-end="8786">6. AI/ML Quality Detection Viewing Interface</strong></h3>
+<p data-start="8787" data-end="8810">The front-end supports:</p>
+
+<ul data-start="8811" data-end="8944">
+ 	<li data-start="8811" data-end="8843">
+<p data-start="8813" data-end="8843">ML-generated quality results</p>
+</li>
+ 	<li data-start="8844" data-end="8870">
+<p data-start="8846" data-end="8870">Visual defect overlays</p>
+</li>
+ 	<li data-start="8871" data-end="8901">
+<p data-start="8873" data-end="8901">Dynamic response workflows</p>
+</li>
+ 	<li data-start="8902" data-end="8944">
+<p data-start="8904" data-end="8944">Predictive material quality indicators</p>
+</li>
+</ul>
+
+<hr data-start="8946" data-end="8949" />
+
+<h2 data-start="8951" data-end="8981"><strong data-start="8954" data-end="8981">Deployment Architecture</strong></h2>
+<h3 data-start="8983" data-end="9012"><strong data-start="8987" data-end="9012">Build + Delivery Flow</strong></h3>
+<ul data-start="9013" data-end="9221">
+ 	<li data-start="9013" data-end="9079">
+<p data-start="9015" data-end="9079">Built with modern bundlers (Vite/Webpack depending on module).</p>
+</li>
+ 	<li data-start="9080" data-end="9149">
+<p data-start="9082" data-end="9149">Separate environment configurations for Dev, QA, UAT, Production.</p>
+</li>
+ 	<li data-start="9150" data-end="9221">
+<p data-start="9152" data-end="9221">CI/CD pipeline integrated with GitHub Actions or equivalent runner.</p>
+</li>
+</ul>
+<h3 data-start="9223" data-end="9258"><strong data-start="9227" data-end="9258">Runtime Configuration Layer</strong></h3>
+<p data-start="9259" data-end="9319">The UI reads configuration through REST endpoints, enabling:</p>
+
+<ul data-start="9320" data-end="9428">
+ 	<li data-start="9320" data-end="9354">
+<p data-start="9322" data-end="9354">Hot-swap of screen definitions</p>
+</li>
+ 	<li data-start="9355" data-end="9381">
+<p data-start="9357" data-end="9381">Real-time role updates</p>
+</li>
+ 	<li data-start="9382" data-end="9401">
+<p data-start="9384" data-end="9401">Dynamic theming</p>
+</li>
+ 	<li data-start="9402" data-end="9428">
+<p data-start="9404" data-end="9428">Multi-language support</p>
+</li>
+</ul>
+
+<hr data-start="9430" data-end="9433" />
+
+<h2 data-start="9435" data-end="9476"><strong data-start="9438" data-end="9476">Designed for Manufacturing Agility</strong></h2>
+<p data-start="9478" data-end="9533">The new React + TypeScript UI is engineered to deliver:</p>
+
+<ul data-start="9534" data-end="9725">
+ 	<li data-start="9534" data-end="9586">
+<p data-start="9536" data-end="9586"><strong data-start="9536" data-end="9584">High performance even on shop-floor hardware</strong></p>
+</li>
+ 	<li data-start="9587" data-end="9622">
+<p data-start="9589" data-end="9622"><strong data-start="9589" data-end="9620">Rapid deployment of new UIs</strong></p>
+</li>
+ 	<li data-start="9623" data-end="9670">
+<p data-start="9625" data-end="9670"><strong data-start="9625" data-end="9668">Seamless integration with backend logic</strong></p>
+</li>
+ 	<li data-start="9671" data-end="9725">
+<p data-start="9673" data-end="9725"><strong data-start="9673" data-end="9725">Fully AI-augmented configuration and interaction</strong></p>
+</li>
+</ul>
+<p data-start="9727" data-end="9876">This architecture positions IACF as one of the most flexible, intelligent, and scalable platforms for building enterprise manufacturing applications.</p>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

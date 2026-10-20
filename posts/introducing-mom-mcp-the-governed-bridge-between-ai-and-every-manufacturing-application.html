@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Introducing MoM-MCP: The Governed Bridge Between AI and Every Manufacturing Application</h1>
+<div class="date">2026-10-08</div>
+Manufacturers want AI that does more than chat. They want it to read live production data, explain what is happening, and recommend what to do next. They also need it to respect the rules that keep a plant safe and compliant. <strong>MoM-MCP</strong> from IACF is built for exactly that gap. It is the bridge between AI and large language models (LLMs) on one side and the full landscape of manufacturing applications on the other: MES/MoM, ERP, PLM, CRM, QMS and the other systems a plant already runs.
+
+This article is a complete introduction to MoM-MCP as it stands today: what it is, how it works, what it can do, the ways you can deploy it, and how to get started.
+<h2>What MoM-MCP is</h2>
+MoM-MCP is a multi-tenant, policy-aware server that speaks the <strong>Model Context Protocol (MCP)</strong>, the open standard AI assistants and agents use to discover and call tools. Any MCP-compatible client, from a desktop AI assistant to a custom agent, can connect to it and immediately work with manufacturing knowledge: KPIs, datasets, business terminology, and governed actions.
+
+Behind that standard interface, MoM-MCP connects to the systems where manufacturing data and decisions actually live. Its connection model is vendor-neutral. A sample industry template shows a single tenant combining ERP, PLM, MES/MoM, CRM and program-management systems in one set of role-based dashboards, and data can also arrive from the shop floor through MQTT (including Sparkplug B) and message-bus pipelines. MoM-MCP also ships ready-made templates for DELMIA Apriso 2023 and 2025.
+<h2>The problem it solves</h2>
+Most plants have plenty of data and plenty of applications. What they lack is a safe way to let AI use both. Connecting an LLM straight to a production database or to MES transactions raises hard questions. Who approved that change? Which data was the model allowed to see? What happens when it gets something wrong?
+
+At the same time, the questions people actually ask cut across systems. A late order may be a scheduling issue in MES, a material shortage in ERP, an engineering change in PLM and a customer commitment in CRM, all at once. Point solutions bolted onto one application cannot answer that. MoM-MCP gives AI one governed doorway into all of them.
+<h2>How it works</h2>
+<img class="aligncenter size-full wp-image-318" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-architecture.png" alt="MoM-MCP architecture: AI clients connect over MCP to the MoM-MCP server, which reads from and runs approved actions on MES, ERP, PLM, CRM, QMS and shop-floor systems" width="1600" height="900" />
+<ul>
+ 	<li><strong>Read through curated knowledge.</strong> MoM-MCP reads from many databases (SQL Server, Oracle, PostgreSQL, MySQL and more) through parameterized datasets, a curated schema knowledge base and a business glossary that maps plant terminology to the right tables and measures. Ad-hoc questions go through grounded text-to-SQL, and every query passes a read-only (SELECT-only) gate.</li>
+ 	<li><strong>Reason with skills.</strong> Skills package a manufacturing task (quality root-cause analysis, predictive maintenance, schedule optimization, shift handover and many more) as a prompt, bound data and a validated output shape. The model can be the server's own LLM or the connected client's model.</li>
+ 	<li><strong>Act only through governed actions.</strong> MoM-MCP never writes directly into the core tables of a manufacturing system. Every change goes through a catalog of preconfigured REST actions, and AI recommendations are validated against that catalog before a person can approve them.</li>
+ 	<li><strong>Keep people in the loop.</strong> Recommendations appear as action cards that users approve, reject or bulk-process, and multi-stage approval workflows can route a decision through several reviewers before anything executes.</li>
+</ul>
+<h2>Key capabilities</h2>
+<h3>Dashboards and AI insight</h3>
+<ul>
+ 	<li>Role-based dashboards for plant managers, supervisors, planners, maintenance and quality teams, with drill-down, filters and multi-language UI.</li>
+ 	<li>AI insight widgets grounded in the viewer's role, the dashboard context and current KPI values.</li>
+ 	<li>A global map of plants with live KPIs, plus 2D shop-floor maps and 3D plant scenes with machine status.</li>
+ 	<li>OEE (real-time, baseline and forecast), quality heat maps, materials-shortage prediction and production sequencing views.</li>
+ 	<li>A sandboxed custom HTML widget for building operator consoles that can only reach the datasets and actions an author explicitly allows.</li>
+</ul>
+<img class="aligncenter size-full wp-image-323" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-dashboard-example.png" alt="MoM-MCP dashboard example with live KPIs, AI insight and recommended actions that a person approves or rejects" width="1600" height="900" />
+<img class="aligncenter size-full wp-image-324" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-dashboard-maintenance.png" alt="MoM-MCP dashboard example with cross-domain KPIs and drill-down tabs by function, showing maintenance KPIs and trends" width="1600" height="900" />
+<h3>Agent Studio and chat</h3>
+<ul>
+ 	<li>A conversational agent that plans across skills, datasets, text-to-SQL and knowledge-base lookups, and can turn an answer into a draft dashboard or a recommended action.</li>
+ 	<li>Chat history that persists per user, with tenant and user context applied automatically.</li>
+ 	<li>LLM-generated static reports with embedded, governed Approve buttons.</li>
+</ul>
+<h3>Planning and orchestration</h3>
+<ul>
+ 	<li>A just-in-time sequencer whose constraints are written as plain-English rules, honored by both the deterministic and the AI-recommended sequence.</li>
+ 	<li>A Gantt-style plan and schedule widget, the newest addition to the dashboard toolkit.</li>
+ 	<li>A flow orchestration engine with a visual canvas, database and email steps, scheduled jobs and inbound REST (webhook) triggers.</li>
+</ul>
+<h3>Model choice</h3>
+A configuration-driven provider registry supports Anthropic, OpenAI, Azure OpenAI, AWS Bedrock, Google Vertex AI, Ollama and other OpenAI-compatible endpoints. MoM-MCP can also run with no server-side model at all by borrowing the connected client's model through MCP sampling.
+<h2>Editions</h2>
+<img class="aligncenter size-full wp-image-322" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-editions-1.png" alt="MoM-MCP editions compared: MoM-MCP, MoM-MCP Lite and MoM Portal" width="1600" height="900" />
+<ul>
+ 	<li><strong>MoM-MCP (full).</strong> The complete design and runtime environment: admin UI, entity authoring and versioning, server-side AI, the built-in Agent Studio and observability.</li>
+ 	<li><strong>MoM-MCP Lite.</strong> A runtime edition for running packaged solutions. It keeps the same MCP server and REST API for datasets, connections, flows, pipelines and scheduled jobs, and it includes server-side LLM capability. What it leaves out is authoring: templates, datasets, dashboards, skills and authorization can't be created or configured on it. Instead, its configuration is imported from a packaged solution exported from the full MoM-MCP.</li>
+ 	<li><strong>MoM Portal.</strong> The end-user Agent Studio (dashboards, chat agent and reports) packaged as its own app. It talks to a MoM-MCP server over MCP and REST, reuses each user's own sign-in, and can use the server's LLM or its own.</li>
+</ul>
+<h2>Security, governance and licensing</h2>
+<ul>
+ 	<li>Tenant isolation, role-based access control and enterprise single sign-on (OIDC and Windows Integrated Authentication).</li>
+ 	<li>OAuth 2.1 browser login for MCP clients, so nobody copies tokens by hand.</li>
+ 	<li>Encrypted secret storage and per-action outbound authentication (API key, OAuth2, mTLS and more).</li>
+ 	<li>A tamper-evident, hash-chained audit log of every tool call, plus an audit trail for AI-recommended actions.</li>
+ 	<li>Versioned configuration with draft, prototype, active and archived states, and signed packages for moving tenants between environments.</li>
+ 	<li>Offline, signed license keys bound to the deployment's domain or machine, with capabilities (dashboards, datasets, skills, actions, sequencing) enabled per license. Evaluation licenses are available.</li>
+</ul>
+<h2>Example use cases</h2>
+<img class="aligncenter size-full wp-image-320" src="http://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-use-cases.png" alt="MoM-MCP use cases: shift start, material risk, quality response, maintenance, executive view and cross-system questions" width="1600" height="900" />
+<ul>
+ 	<li><strong>Shift start.</strong> A supervisor asks what changed overnight and gets a summary of downtime, quality alerts and at-risk orders, with recommended actions to approve.</li>
+ 	<li><strong>Material risk.</strong> Planners see which components will run short against planned orders, when to order them, and an AI view of expedite options drawn from ERP and MES data.</li>
+ 	<li><strong>Quality response.</strong> A quality engineer reviews a defect heat map, asks for root-cause analysis and approves a CAPA or quality hold through a governed action.</li>
+ 	<li><strong>Maintenance.</strong> Equipment telemetry arriving over MQTT feeds predictive-maintenance skills that recommend work orders for human review.</li>
+ 	<li><strong>Executive view.</strong> Leaders scan a global map of plants, drill into one site and follow a KPI down to the line.</li>
+ 	<li><strong>Cross-system questions.</strong> An engineering change in PLM, a customer commitment in CRM and the shop-floor schedule are viewed side by side instead of in three separate tools.</li>
+</ul>
+<h2>Getting started</h2>
+MoM-MCP runs as a Linux container (Docker Compose, with built-in Prometheus monitoring), as a packaged Windows application, or through native installers for Windows and major Linux distributions. Connect an AI client over local stdio or Streamable HTTP, choose a template, point its connections at your systems and start with one or two high-value scenarios.
+
+IACF can help you map your applications and priorities to MoM-MCP, set up an evaluation and plan a pilot. To learn more or request a demo, email <a href="mailto:info@iacf.us">info@iacf.us</a> or visit <a href="../index.html">www.iacf.us</a>.
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

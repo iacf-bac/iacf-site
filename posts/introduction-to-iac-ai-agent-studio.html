@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to IAC AI Agent Studio — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Introduction to IAC AI Agent Studio</h1>
+<div class="date">2026-03-20</div>
+<p data-path-to-node="2">The IAC AI Agent Studio is a production-grade multi-agent orchestration platform built directly into the IAC application framework. At its core, the platform allows developers to create, configure, and manage AI agents, which serve as AI assistants equipped with specific purposes, execution behaviors, and toolsets.</p>
+<p data-path-to-node="3">The studio is highly versatile and model-agnostic, supporting a wide range of Large Language Models (LLMs) including OpenAI, Anthropic, Google, Azure, and Ollama. By granting these agents access to databases, file systems, operating system services, and external messaging channels, the platform empowers them to handle complex, real-world workflows. Furthermore, agents can be deployed as scheduled jobs, queue workers, or continuous integration hubs, making them suitable for robust enterprise automation.</p>
+<p data-path-to-node="3">You may see how AI Agent - IACF Data Analyst works from following video:</p>
+https://youtu.be/M0cjeCjokYU?si=KYLJW6Ip9Yx2Mv9Y
+<p data-path-to-node="3">You may see how AI Agent - IACF UI Design Agent works from following video:</p>
+https://youtu.be/YaYJVElRUuU?si=RgYwq5e3vThjkqO4
+
+<hr data-path-to-node="4" />
+
+<h2 data-path-to-node="5"><b data-path-to-node="5" data-index-in-node="0">Architecture Overview</b></h2>
+<p data-path-to-node="6">The architecture of the IAC AI Agent Studio is highly modular. It combines a core reasoning engine with specialized subsystems for memory, external connectivity, and dynamic tooling.</p>
+
+
+<figure><img class=" wp-image-293" src="http://www.iacf.us/wp-content/uploads/2026/03/IAC-AI-Agent-Studio-Architecture-201x300.png" alt="IAC-AI-Agent-Studio-Architecture" width="401" height="599" /> IAC-AI-Agent-Studio-Architecture</figure>
+<h4 data-path-to-node="7"><b data-path-to-node="7" data-index-in-node="0">1. The Core Execution Engine</b></h4>
+<ul data-path-to-node="8">
+ 	<li>
+<p data-path-to-node="8,0,0"><b data-path-to-node="8,0,0" data-index-in-node="0">The ReAct Loop:</b> Every agent run within the platform is fundamentally driven by the "ReAct" (Reason + Act) loop. This continuous cognitive cycle allows the LLM to generate thoughts, invoke tools to gather necessary observations, and act on the environment until the requested task is fulfilled.</p>
+</li>
+</ul>
+<h4 data-path-to-node="9"><b data-path-to-node="9" data-index-in-node="0">2. Tooling and Extensibility</b></h4>
+<p data-path-to-node="10">The platform features a layered tooling architecture that provides agents with both immediate capabilities and extensible skills:</p>
+
+<ul data-path-to-node="11">
+ 	<li>
+<p data-path-to-node="11,0,0"><b data-path-to-node="11,0,0" data-index-in-node="0">Built-in Tools:</b> Every agent is automatically injected with foundational tools out-of-the-box, such as <code data-path-to-node="11,0,0" data-index-in-node="102">memory_search</code>, <code data-path-to-node="11,0,0" data-index-in-node="117">memory_read</code>, <code data-path-to-node="11,0,0" data-index-in-node="130">memory_save</code>, and <code data-path-to-node="11,0,0" data-index-in-node="147">send_to_agent</code>.</p>
+</li>
+ 	<li>
+<p data-path-to-node="11,1,0"><b data-path-to-node="11,1,0" data-index-in-node="0">Installed Skills:</b> Capabilities can be extended without modifying the IAC core codebase by installing external skill packages. These skills run as subprocesses using external programs like Node.js scripts, Python modules, or Bash scripts.</p>
+</li>
+ 	<li>
+<p data-path-to-node="11,2,0"><b data-path-to-node="11,2,0" data-index-in-node="0">Script Runner:</b> When agents encounter a task that requires ad-hoc capabilities, they can utilize the Script Runner to dynamically generate and execute code in Python, Bash, PowerShell, JavaScript, or Go. Because code execution carries risk, the Script Runner includes a built-in human approval workflow for write or destructive operations.</p>
+</li>
+ 	<li>
+<p data-path-to-node="11,3,0"><b data-path-to-node="11,3,0" data-index-in-node="0">Data Parser:</b> This subsystem allows agents to consume and parse highly variable data—such as IoT sensor readings, EDI interchange files, CNC machine logs, or legacy mainframe fixed-width files—using natural language parsing rules.</p>
+</li>
+</ul>
+<h4 data-path-to-node="12"><b data-path-to-node="12" data-index-in-node="0">3. The 3-Layer Memory System</b></h4>
+<p data-path-to-node="13">To ensure agents can maintain persistent context and learn over time, the studio implements a dedicated, per-agent memory system categorized into three layers:</p>
+
+<ul data-path-to-node="14">
+ 	<li>
+<p data-path-to-node="14,0,0"><b data-path-to-node="14,0,0" data-index-in-node="0">L0 (Keywords Layer):</b> A permanent indexing layer that relies on keyword sets and Jaccard similarity to provide extremely fast search lookups.</p>
+</li>
+ 	<li>
+<p data-path-to-node="14,1,0"><b data-path-to-node="14,1,0" data-index-in-node="0">L1 (Summary Layer):</b> Retained for 180 days, this layer stores an LLM-generated summary (roughly 200 words) of interactions, providing readable context injection for future tasks.</p>
+</li>
+ 	<li>
+<p data-path-to-node="14,2,0"><b data-path-to-node="14,2,0" data-index-in-node="0">L2 (Full History Layer):</b> Retained for 90 days, this layer contains the complete, raw JSON of the conversation history for deep analysis and auditing.</p>
+</li>
+</ul>
+<h4 data-path-to-node="15"><b data-path-to-node="15" data-index-in-node="0">4. Communication and Interoperability</b></h4>
+<ul data-path-to-node="16">
+ 	<li>
+<p data-path-to-node="16,0,0"><b data-path-to-node="16,0,0" data-index-in-node="0">Agent Channels:</b> Handled by the <code data-path-to-node="16,0,0" data-index-in-node="31">AgentChannelService</code>, this subsystem connects agents to users across external messaging environments. It supports over 15 channel types, including Telegram, Discord, WeCom, Slack, Teams, and Email. The service safely manages inbound message routing, per-sender rate limiting, and session state tracking.</p>
+</li>
+ 	<li>
+<p data-path-to-node="16,1,0"><b data-path-to-node="16,1,0" data-index-in-node="0">Agent Gateway (A2A Protocol):</b> For multi-agent orchestration, the studio implements the Google A2A (Agent-to-Agent) JSON-RPC protocol. This allows a central orchestrator agent to seamlessly delegate tasks to specialist sub-agents, orchestrate asynchronous task pipelines, and even communicate with external, third-party A2A-compatible systems.</p>
+</li>
+</ul>
+<h4 data-path-to-node="17"><b data-path-to-node="17" data-index-in-node="0">5. Configuration and Management</b></h4>
+<ul data-path-to-node="18">
+ 	<li>
+<p data-path-to-node="18,0,0"><b data-path-to-node="18,0,0" data-index-in-node="0">Configuration Files:</b> System-wide AI settings—such as enabling vendors, assigning API keys, and picking default models—are managed via a centralized <code data-path-to-node="18,0,0" data-index-in-node="148">aiconfig.json</code> file, with local environment overrides provided by <code data-path-to-node="18,0,0" data-index-in-node="213">aiconfig.local.json</code>.</p>
+</li>
+ 	<li>
+<p data-path-to-node="18,1,0"><b data-path-to-node="18,1,0" data-index-in-node="0">Agent Management:</b> Administrators can create, configure, and manage their fleet of agents via the web-based Agent Studio Portal or programmatically using REST APIs.</p>
+</li>
+</ul>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

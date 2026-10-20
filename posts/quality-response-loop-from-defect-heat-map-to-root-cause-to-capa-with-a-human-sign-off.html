@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Response Loop: From Defect Heat Map to Root Cause to CAPA, with a Human Sign-Off — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Quality Response Loop: From Defect Heat Map to Root Cause to CAPA, with a Human Sign-Off</h1>
+<div class="date">2026-10-09</div>
+A defect spike is easy to see and hard to act on. The data sits in several systems. The analysis takes time, and the fix has to go through the right people before anything changes on the line. This article walks through one quality response loop, from a heat map to an approved CAPA, and shows how IACF's <strong>MoM-MCP</strong> supports each step. MoM-MCP is the bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM, QMS and others.
+
+If you are new to MoM-MCP, start with our <a href="../posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">introduction to MoM-MCP</a>. This piece is a walk-through, not a product tour.
+<p style="text-align: center;"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/quality-loop-flow.png" alt="The IACF quality response loop: defect heat map, AI root cause from governed MES, QMS, ERP and PLM data, validated recommendations, multi-stage human approval, governed write-back of CAPA and quality hold, and an audit trail" width="1600" height="900" /></p>
+
+<h2>The scenario</h2>
+Consider a plant where a quality engineer starts the morning on a defect dashboard. One production line is noticeably darker on the heat map than it was last week, and most of the new defects share a single reason code. The engineer has three questions: why is this happening, what should we do about it, and who needs to sign off?
+
+The scenario is illustrative. It describes how the features work together, not results from a specific customer.
+<h2>Step by step</h2>
+<h3>1. Spot the spike on the defect heat map</h3>
+MoM-MCP dashboards include a quality defect heat map that crosses defects by product, production line, work station, equipment and reason code. Darker cells mean more defects. Clicking a cell scopes the whole dashboard to that combination, so the Pareto chart, the open NCR count and the detail table all follow the engineer's focus.
+<h3>2. Ask the AI for the root cause</h3>
+From the dashboard or the Agent Studio chat, the engineer asks what is driving the spike. MoM-MCP runs a packaged <strong>quality root-cause skill</strong>: a prompt, bound datasets and a validated output shape. The skill works the way a senior quality engineer would:
+<ul>
+ 	<li>Flag operations whose first-pass yield is below a threshold, then cross-reference the defect Pareto.</li>
+ 	<li>Check open NCRs and the CAPA backlog for the same defect codes.</li>
+ 	<li>Assign a root-cause category using the 5M+1E fishbone (machine, method, material, man, measurement, environment).</li>
+ 	<li>Cite the specific values behind every finding, and treat isolated defects as "monitor" rather than CAPA material.</li>
+</ul>
+An <strong>SPC monitor skill</strong> can add process-capability context, for example whether a characteristic has drifted off center or its spread has widened. Every read passes a SELECT-only gate. When the tenant also connects ERP or PLM, the chat agent can bring in related data, such as material or engineering information, through the same governed datasets.
+<h3>3. Get recommended actions that are valid by construction</h3>
+A quality action skill turns the analysis into proposed actions, drawn only from the tenant's catalog of governed actions:
+<ul>
+ 	<li><strong>Create a CAPA</strong> for a recurring or statistically significant nonconformance.</li>
+ 	<li><strong>Place a quality hold</strong> on a work order when suspect product may still be in process.</li>
+ 	<li><strong>Create a maintenance order</strong> when the evidence points at equipment condition.</li>
+ 	<li><strong>Close a CAPA</strong> only after its corrective action is verified effective.</li>
+</ul>
+The skill is told not to open a duplicate CAPA when one already covers the same root cause. Each recommendation is checked against the action catalog and a JSON Schema before anyone sees an Approve button. A card with a missing or invalid parameter is greyed out and cannot be approved.
+<h3>4. Route the decision through multi-stage approval</h3>
+Nothing executes on the AI's say-so. The engineer submits the recommendation, and a <strong>multi-stage approval workflow</strong> takes over:
+<ul>
+ 	<li>Stages run in order, and approvers inside a stage can work in parallel, for example quality and production sign-off at the same time.</li>
+ 	<li>The requester can never approve their own request (four-eyes).</li>
+ 	<li>Approvers see the context: the recommended action, its parameters and the systems it touches. Requests wait in a Studio Inbox, with email notification.</li>
+ 	<li>Escalation by delegation, timeout or an approver's choice keeps requests from stalling.</li>
+</ul>
+<h3>5. Governed write-back, recorded in the audit trail</h3>
+After the last stage approves, MoM-MCP re-checks the requester's current permissions and then calls the preconfigured REST action that creates the CAPA or places the hold. It never writes straight into core MES tables. The <strong>AI-action audit trail</strong> records whether the action came from an AI recommendation, which approval it went through, and which system it ran against, on top of a hash-chained log of every tool call.
+<h3>6. Close the loop</h3>
+Weeks later, the heat map shows whether the line has cooled down. When the backlog shows the corrective action verified, the same governed path can recommend closing the CAPA, again with a human sign-off.
+<p style="text-align: center;"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/quality-loop-roles.png" alt="Who does what in the IACF quality response loop: the quality engineer, MoM-MCP, the approvers and the connected manufacturing systems, step by step" width="1600" height="900" /></p>
+
+<h2>What changes for the quality team</h2>
+<ul>
+ 	<li><strong>One place to look.</strong> Heat map, root cause and recommended actions come together in IACF dashboards and Agent Studio instead of being stitched together across several applications.</li>
+ 	<li><strong>Evidence first.</strong> The analysis cites the operations, defect codes and records it relied on.</li>
+ 	<li><strong>No bad requests reach approvers.</strong> Invalid recommendations are stopped before the Approve button.</li>
+ 	<li><strong>Accountability built in.</strong> Approvals, escalations and executions are recorded automatically.</li>
+</ul>
+<p style="text-align: center;"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/quality-loop-before-after.png" alt="Quality response without and with IACF: from manual cross-system analysis and email sign-off to an evidence-based, validated and human-approved loop with an audit trail" width="1600" height="900" /></p>
+
+<h2>Where it runs</h2>
+The loop runs in MoM-MCP's dashboards and Agent Studio, or in <strong>MoM Portal</strong>, the standalone end-user Agent Studio that talks to MoM-MCP over MCP and REST and reuses each user's own sign-in. A packaged solution designed in full MoM-MCP can run on MoM-MCP Lite. Any MCP-compatible AI client can use the same skills and governed actions. Visual inspection results from our <a href="../posts/transforming-manufacturing-with-ai-powered-visual-quality-inspection.html">AI-powered visual quality inspection</a> work are a natural upstream source of defect data.
+
+<em>Status note:</em> the heat map, quality skills, governed actions and action validation are part of MoM-MCP today. Multi-stage approvals and the AI-action audit trail are new and still in development.
+<h2>Try it on your own quality data</h2>
+Want to see the loop on your lines? Visit <a href="../index.html">www.iacf.us</a> or <a href="../pages/contact-us.html">contact us</a>.
+
+Contact: <a href="mailto:info@iacf.us">info@iacf.us</a>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

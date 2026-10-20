@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>More Than an Expense Tracker: Meet IACF Personal Finance, a Self-Hosted Money Hub — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>More Than an Expense Tracker: Meet IACF Personal Finance, a Self-Hosted Money Hub</h1>
+<div class="date">2026-10-16</div>
+<p>Projects, reimbursements, investment returns, reminders and AI-agent capture, all running on your own machine.</p>
+<p>Most budgeting apps answer one question: where did my money go? Real financial life asks harder ones. How much of my brokerage growth is my own contributions, and how much is actual return? Which work expenses has my employer paid back, and which are still outstanding? Is the trip still on budget? When is the next card payment due?</p>
+<p>IACF Personal Finance is a self-hosted app built to answer those questions. It is inspired by the popular bookkeeping app Suishouji (随手记) and runs as a single FastAPI process with a SQLite database and a responsive web UI that also works on a phone. Your data stays on your own computer.</p>
+<h2>How it fits together</h2>
+<img src="https://www.iacf.us/wp-content/uploads/2026/10/pf-architecture.png" alt="IACF Personal Finance architecture" />
+<p><em>IACF Personal Finance architecture</em></p>
+<p>Everything runs in one process. Inputs such as the web UI, iPhone Shortcuts, a personal AI agent, an optional Telegram bot and your email alerts all call the same API. The server writes to a local database and receipt folder, runs OCR locally, and only talks to the outside world (SMTP, Google Drive, Telegram) when you switch those features on.</p>
+<h2>What it does</h2>
+<ul>
+<li><strong>Everyday bookkeeping.</strong> Accounts in groups, multi-currency, two-level categories, budgets, dashboards, reports and CSV export, in English, 简体中文 and 繁體中文 (it follows your browser language). Quick add understands plain lines such as lunch 25.5 sapphire or 午饭 35 支付宝.</li>
+<li><strong>Projects with a real plan.</strong> Give a trip or renovation named budget lines (Flights, Hotel, Meals…) and see planned vs. actual, by line and by category. Archive it when you&#x27;re done.</li>
+<li><strong>Reimbursement linking (报销).</strong> Flag expenses as reimbursable, then link them many-to-many to the money that comes back, with partial amounts. Expenses close automatically when they are fully repaid, or you can write off the rest. Reimbursed money never counts as your own spending, and reimbursements never count as income.</li>
+<li><strong>Investment principal vs.</strong> returns. Each investment account&#x27;s value is split into principal, returns and unexplained, with trend charts and money-weighted returns.</li>
+<li><strong>Reminder Center.</strong> Credit card statement and due dates, scheduled bills and remind-only schedules, plus an endpoint an iPhone Shortcut can turn into a daily notification.</li>
+<li><strong>Automatic transactions from email.</strong> IMAP mailboxes are checked every N minutes or at fixed times. Sender-based parsing rules (with bank presets) turn card alerts into transactions or into a review inbox.</li>
+<li><strong>Receipt photo OCR.</strong> Snap or upload a receipt and local Tesseract OCR fills in the total, date, merchant, subtotal, tax and tip. Photos are filed by date.</li>
+<li><strong>Agent API for AI bots.</strong> POST /api/agent/transactions accepts plain names and an optional receipt file, so a personal AI agent such as Grok Bot can log an expense from a photo. A built-in Telegram bot (optional) handles text quick add and reminder pushes.</li>
+<li><strong>Tax &amp; tips.</strong> Optional breakouts on every transaction, with their own report.</li>
+<li><strong>Backups and emailed reports.</strong> Scheduled snapshots, incremental off-site backup of the database and receipts (e.g. to Google Drive), SMTP reminder emails and daily, weekly and monthly HTML reports.</li>
+<li><strong>Self-hosted privacy.</strong> It binds to localhost by default, ships as a Windows zip with setup scripts, and never asks for bank credentials.</li>
+</ul>
+<h2>A closer look</h2>
+<h3>Investments: what you put in vs. what it earned</h3>
+<img src="https://www.iacf.us/wp-content/uploads/2026/10/pf-investments.png" alt="Investments: principal vs returns" />
+<p><em>Investments: principal vs returns</em></p>
+<p>Contributions and returns are kept apart, so a 10% gain on the chart means 10% returns, not a deposit you made last month.</p>
+<h3>Reimbursement Center</h3>
+<img src="https://www.iacf.us/wp-content/uploads/2026/10/pf-reimbursement-center.png" alt="Reimbursement Center with partial links" />
+<p><em>Reimbursement Center with partial links</em></p>
+<p>Outstanding totals by payer and currency, open, partial and closed states, and one-click linking with suggested matches.</p>
+<h3>Reminder Center</h3>
+<img src="https://www.iacf.us/wp-content/uploads/2026/10/pf-reminder-center.png" alt="Reminder Center" />
+<p><em>Reminder Center</em></p>
+<p>Card statements show the statement balance, the minimum payment and what is still owed. They mark themselves done once your payments cover them.</p>
+<h3>Email monitoring and parsing rules</h3>
+<img src="https://www.iacf.us/wp-content/uploads/2026/10/pf-email-rules.png" alt="Email monitoring and parsing rules" />
+<p><em>Email monitoring and parsing rules</em></p>
+<p>Each mailbox can be checked on a fixed schedule. Rules can be tested against a sample email before you rely on them.</p>
+<p>All screenshots use fabricated  data.</p>
+<h2>Why self-hosted?</h2>
+<p>Financial data is some of the most personal data you have. IACF Personal Finance keeps the database, receipt photos and backups in one folder you control. OCR runs locally, and every outbound integration is opt-in. You get the automation people expect from cloud apps without handing your ledger to one.</p>
+<h2>Try it</h2>
+<p>If you track more than groceries (trips, work expenses, investment accounts, card due dates), I&#x27;d love your feedback. Repo and setup guide on GitHub: <a href="https://github.com/mdaxf/finance">https://github.com/mdaxf/finance</a></p>
+<p>What&#x27;s the one money workflow you still run in a spreadsheet?</p>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

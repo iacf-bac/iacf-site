@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecting an AI Assistant to MoM-MCP: stdio or HTTP with OAuth 2.1 Sign-In — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Connecting an AI Assistant to MoM-MCP: stdio or HTTP with OAuth 2.1 Sign-In</h1>
+<div class="date">2026-10-19</div>
+<p>MoM-MCP is IACF's bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM, QMS and others. It speaks the Model Context Protocol (MCP). That means any MCP-compatible AI assistant, such as Claude Desktop or Claude Code, or a custom agent can use its governed tools: datasets and KPIs, schema and glossary lookups, grounded text-to-SQL, manufacturing skills and the configured action catalog.</p>
+<p>This guide covers the two ways to connect, local <strong>stdio</strong> and shared <strong>Streamable HTTP</strong>. It also shows how the built-in <strong>OAuth 2.1 sign-in</strong> lets a remote client log in through the browser, so nobody has to copy tokens around. New to MoM-MCP? Start with the <a href="../posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">introduction to MoM-MCP</a>. To see which edition runs where, read <a href="../posts/choosing-a-mom-mcp-edition-full-lite-or-portal.html">Choosing a MoM-MCP edition</a>.</p>
+<img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-connect-paths.png" alt="Two ways to connect an AI assistant to IACF MoM-MCP: local stdio, where the assistant launches the server with no network port and supplies the model, and shared Streamable HTTP with OAuth 2.1 browser sign-in or a bearer token and a server-side LLM" width="1600" height="900" />
+
+<h2>Two transports, the same governed tools</h2>
+<p>Both transports offer the same tools. What changes is where the server runs, how the client proves who it is, and which model does the AI work.</p>
+<table>
+<thead>
+<tr><th></th><th>Local stdio</th><th>Streamable HTTP</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Where it runs</strong></td><td>On the user's machine, started by the AI assistant</td><td>On a shared server that many clients and agents reach</td></tr>
+<tr><td><strong>Network</strong></td><td>No network port opened</td><td>One MCP endpoint, optionally alongside the admin UI and REST API</td></tr>
+<tr><td><strong>Identity</strong></td><td>API token in the client's MCP configuration</td><td>OAuth 2.1 browser sign-in, or a bearer token header</td></tr>
+<tr><td><strong>AI model</strong></td><td>The assistant's own model, through MCP sampling</td><td>Usually a server-side LLM</td></tr>
+<tr><td><strong>Best for</strong></td><td>One engineer or analyst at one desk</td><td>Teams, remote agents and production use</td></tr>
+</tbody>
+</table>
+
+<h2>Option 1: local stdio for one person at one desk</h2>
+<p>With stdio, the AI assistant launches MoM-MCP as a local process and talks to it over standard input and output. You register the server in the assistant's MCP configuration and add an API token. The token comes from first-time setup or from the <em>Users &amp; tokens</em> page in the admin UI. The session then runs as a real user, with that user's tenant and roles.</p>
+<p>If you leave the token out, the server falls back to a local development identity. Use that only on a trusted personal machine. An administrator can turn anonymous access off completely.</p>
+<p>By default, stdio uses <strong>MCP sampling</strong>. The assistant supplies the model for skills and narration, so the server needs no LLM key of its own.</p>
+
+<h2>Option 2: Streamable HTTP for shared and remote clients</h2>
+<p>In HTTP mode, MoM-MCP runs as a shared server with one MCP endpoint. It can run combined with the admin UI and REST API, MCP only, or UI only, so the MCP endpoint can stay on a private network while the UI is hosted elsewhere. Every MCP request must carry a bearer token, and there are two ways to get one.</p>
+
+<h3>OAuth 2.1 browser sign-in (recommended)</h3>
+<p>MoM-MCP includes an OAuth 2.1 authorization server that implements the <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization">MCP authorization flow</a>. If your client can add a custom connector by URL, you only enter the server's MCP address. The rest happens automatically:</p>
+<img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-connect-oauth-flow.png" alt="OAuth 2.1 sign-in for IACF MoM-MCP: add the server URL, discover and register the client, sign in through the browser, exchange a one-time PKCE-protected code for a bearer token, then call governed MCP tools" width="1600" height="900" />
+<ol>
+<li>The client calls the endpoint without a token. The server replies with a pointer to its authorization metadata.</li>
+<li>The client reads the discovery documents and registers itself (dynamic client registration).</li>
+<li>A browser opens the MoM-MCP sign-in page. The user signs in with a username and password, or pastes an existing token.</li>
+<li>The client trades a one-time code, protected by PKCE, for a bearer token.</li>
+<li>The client calls MCP tools with that token.</li>
+</ol>
+<p>Several guardrails are built in:</p>
+<ul>
+<li>Only the PKCE S256 method is accepted.</li>
+<li>Each code works once and expires after ten minutes.</li>
+<li>Redirect addresses must exactly match a registered one, and plain-http redirects are allowed only to the local machine.</li>
+<li>Client registrations, sign-ins and token exchanges are written to the audit log.</li>
+<li>Repeated failed sign-ins are temporarily blocked.</li>
+</ul>
+<p>Issued tokens are ordinary sessions. They appear in the token list, can be revoked, and expire after eight hours by default. Refresh tokens are not implemented yet, so the client repeats the browser sign-in when a token expires.</p>
+
+<h3>Manual bearer token</h3>
+<p>Some clients don't support OAuth discovery. For those, add the endpoint to the client's HTTP configuration with an Authorization header that carries an API token from the <em>Users &amp; tokens</em> page. It's the same kind of token the REST API accepts.</p>
+
+<h2>Choosing where the model runs</h2>
+<p>Under stdio, sampling lets the assistant supply the model. Over HTTP, most MCP clients don't support sampling yet, so plan on a server-side LLM. MoM-MCP's provider registry covers Anthropic, OpenAI, Azure OpenAI, AWS Bedrock, Google Vertex AI and Gemini, Ollama and any OpenAI-compatible endpoint. Pure data tools (datasets, KPIs, schema and glossary lookups) work without any LLM. Background work, such as scheduled or message-triggered skills and admin chat, always needs a server-side model.</p>
+
+<h2>Which path fits?</h2>
+<img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/mom-mcp-connect-choose.png" alt="Choosing a MoM-MCP connection: local stdio for one user on a trusted machine, HTTP with OAuth 2.1 sign-in for teams and remote clients, HTTP with a bearer token for clients without OAuth discovery, plus a short pre-connection checklist" width="1600" height="900" />
+<ul>
+<li><strong>Local stdio:</strong> one user on a trusted machine, no open port.</li>
+<li><strong>HTTP + OAuth 2.1 sign-in:</strong> teams and remote assistants, each person signed in as themselves.</li>
+<li><strong>HTTP + bearer token:</strong> custom agents and clients without OAuth discovery, each with its own token.</li>
+</ul>
+
+<h2>Checklist before you connect</h2>
+<ol>
+<li>Initialize the server and use the bootstrap admin access to create named users with the right roles.</li>
+<li>Pick the transport: stdio for a single desk, HTTP for anything shared.</li>
+<li>For an HTTP server that other machines can reach, set a real encryption master key. The server will not start on a non-local address without one. Publish the endpoint at an HTTPS address.</li>
+<li>Decide where the model runs: sampling from the client, or a server-side provider.</li>
+<li>Start with a read-only question, then check the result in the audit log.</li>
+</ol>
+<p>Whichever path you choose, governance stays the same. Reads pass a SELECT-only gate with per-request row and column policies. Writes go only through the configured action catalog, never as direct SQL into MES core tables. Every tool call is recorded in a hash-chained audit log. To see how governed actions turn into approved work, read <a href="../posts/inside-the-mom-mcp-flow-engine-from-any-trigger-to-a-governed-approved-action.html">Inside the MoM-MCP flow engine</a>.</p>
+<p>Want help connecting your AI assistant or agents to MoM-MCP? Visit <a href="../index.html">www.iacf.us</a> or email <a href="mailto:info@iacf.us">info@iacf.us</a>.</p>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

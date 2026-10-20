@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the MoM-MCP Flow Engine: From Any Trigger to a Governed, Approved Action — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Inside the MoM-MCP Flow Engine: From Any Trigger to a Governed, Approved Action</h1>
+<div class="date">2026-10-14</div>
+<p>MoM-MCP is IACF's bridge between AI and large language models (LLMs) and the manufacturing applications a plant already runs: MES/MoM, ERP, PLM, CRM, QMS and others. Reading data and answering questions is only half the job. Sooner or later someone asks, "Can it also <em>do</em> something?" Re-sequence an order, open a quality hold, alert the line, email the shift lead.</p>
+<p>That is what the new <strong>flow engine</strong> in MoM-MCP is for. A flow is a small, visual program made of typed steps and conditional edges. It can start from a webhook, a message bus, a schedule, an AI analysis or a recommendation on a dashboard, and it ends in governed, traceable outcomes. When AI proposes the run, people can be required to approve it first.</p>
+<p>New to MoM-MCP? Start with our <a href="../posts/introducing-mom-mcp-the-governed-bridge-between-ai-and-every-manufacturing-application.html">introduction to MoM-MCP</a>.</p>
+<p style="text-align:center"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/flow-engine-architecture.png" alt="IACF MoM-MCP flow engine architecture: triggers (inbound REST, message pipelines, cron, AI skill post-actions, dashboard action panel) feed one flow of typed steps with conditional edges and an optional multi-stage approval policy, producing governed REST actions, database steps, MQTT publish, email and a run trace with audit" width="1600" height="900" /></p>
+
+<h2>Why a flow engine?</h2>
+<p>Before flows, MoM-MCP already had several places where "something happens next": message pipeline actions, skill post-actions, scheduled jobs and the dashboard action panel. Each was a simple list of actions, wired by hand. That works for "when X, do Y." It gets awkward when the real process is "look up the order, ask the AI what is going on, then do one thing for a critical case and another for a routine one."</p>
+<p>A flow gives all of those entry points one shared way to orchestrate work:</p>
+<ul>
+<li><strong>Real branching.</strong> Edges carry conditions, and a dedicated router step sends the run down one labeled branch or another.</li>
+<li><strong>Data passed between steps.</strong> Every step reads from and writes to a shared variable store, so the output of a query feeds the AI skill, and the AI's answer feeds the decision.</li>
+<li><strong>Composition.</strong> A sub-flow step calls another flow, so common logic is written once and reused.</li>
+</ul>
+
+<h2>Five ways a flow can start</h2>
+<ul>
+<li><strong>Inbound REST trigger.</strong> An external system, such as a QMS, an ERP workflow or a test rig, POSTs to the flow's trigger endpoint using a narrowly scoped API token. The flow declares its inputs, and the payload is checked against them.</li>
+<li><strong>Message pipelines.</strong> MQTT, Kafka, AMQP, ActiveMQ and Azure Service Bus pipelines can run a flow when a message arrives, with conditions and cooldowns so a noisy signal doesn't fire it over and over.</li>
+<li><strong>Cron schedules.</strong> Run a flow at shift start, hourly or overnight.</li>
+<li><strong>AI skill post-actions.</strong> After a skill finishes its analysis, it can hand the result to a flow.</li>
+<li><strong>The dashboard action panel.</strong> The AI can recommend running a flow, with its inputs filled in, right next to the data that justifies it. A person approves it before anything runs.</li>
+</ul>
+
+<h2>The step library</h2>
+<p>Flows are built from eleven typed steps on a visual canvas editor:</p>
+<p style="text-align:center"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/flow-engine-steps.png" alt="The IACF MoM-MCP flow engine step library: data steps (query dataset, query by connection, stored procedure), AI and logic steps (invoke AI skill, set variable, sandboxed Python or JavaScript script, router) and action steps (call REST action, MQTT publish, send email, sub-flow), with per-step retry, conditional edges and a run trace" width="1600" height="900" /></p>
+<ul>
+<li><strong>Data:</strong> query a named dataset, run a parameterized SQL query through a configured connection, or call a stored procedure. Query values are bound as parameters, never pasted into SQL text.</li>
+<li><strong>AI and logic:</strong> invoke an AI skill, compute a value with a sandboxed expression, run a short sandboxed Python or JavaScript function for logic that needs more than one line, or branch with a router.</li>
+<li><strong>Actions:</strong> call a REST action from the tenant's action catalog, publish to an MQTT broker (an andon board or an edge device, for example), send an email, or call a sub-flow.</li>
+</ul>
+<p>Every step can have its own retry policy with backoff. When several branches meet, the join can wait for <em>all</em> of them or continue on the first to arrive with <em>any</em>. The engine validates the graph when you save it: it rejects cycles, unknown steps and two steps that would overwrite the same variable.</p>
+
+<h2>AI proposes, people decide</h2>
+<p>The most important part of a manufacturing flow is often who is allowed to start it. A flow can reference an <strong>approval policy</strong>, the same multi-stage approval workflow MoM-MCP uses for REST actions.</p>
+<p style="text-align:center"><img class="aligncenter size-full" src="https://www.iacf.us/wp-content/uploads/2026/10/flow-engine-approved-run.png" alt="Illustrative sequence of an approved IACF MoM-MCP flow run: AI recommends running a flow, people approve in stages, the requester's current roles are rechecked, the flow runs, and every step is recorded with an audit trail" width="1600" height="900" /></p>
+<ul>
+<li>Stages open in order, and the approvers within a stage work in parallel. A node can need any one approver from a role or all of them, and it can escalate on a timeout or by delegation.</li>
+<li>The person who requested the run can never approve it, even if they also hold the approver role. That is the classic four-eyes rule.</li>
+<li>When the last stage signs off, MoM-MCP checks the requester's <em>current</em> roles again before the flow runs, so a role that was revoked during the approval doesn't carry over.</li>
+</ul>
+<p>Approval is optional per flow. Without a policy, a recommended flow runs after a single approve click, as action-panel recommendations always have. You can also read more about multi-stage sign-off in our <a href="../posts/quality-response-loop-from-defect-heat-map-to-root-cause-to-capa-with-a-human-sign-off.html">quality response loop use case</a>.</p>
+
+<h2>Every run leaves a trace</h2>
+<p>Each run is saved with a step-by-step record: what went into each step, what came out, any error, and when it started and ended. Steps skipped by a branch are recorded as skipped, not failed, and a failed run still keeps the steps that finished before the failure. Together with the AI-action audit trail, that answers the question every plant manager asks after an automated change: what happened, why, and who approved it?</p>
+
+<h2>Where it fits</h2>
+<p>The flow engine is new in MoM-MCP, and the same flows run on MoM-MCP Lite, which keeps the MCP server and REST API for flows, pipelines and scheduled jobs. If you are deciding where to design and where to run them, see <a href="../posts/choosing-a-mom-mcp-edition-full-lite-or-portal.html">Choosing a MoM-MCP edition</a>.</p>
+<p>Want to see a flow go from webhook to approved action on your own data? Contact us at <a href="mailto:info@iacf.us">info@iacf.us</a>.</p>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

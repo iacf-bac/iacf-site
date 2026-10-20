@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Needed a Finance App, So I Asked My Bot to Build It — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>I Needed a Finance App, So I Asked My Bot to Build It</h1>
+<div class="date">2026-10-11</div>
+<article class="iacf-post">
+<p class="subtitle"><em>What one Sunday with Grok Bot taught me about software made to order</em></p>
+<p>For about fourteen years I tracked my money in Suishouji (éšæ‰‹è®°, sui.com). It is a good app. It is also somebody else's app: my financial history sits on somebody else's servers, and somebody else decides which features I get. On Sunday, October 11, I wanted to see whether I could replace it without writing the code myself.</p>
+<p>I have spent most of my career in manufacturing IT, building integration frameworks and, more recently, open-source tools like the IACF framework, MoM-MCP, apriso-mcp and Testbot. So I know what a "simple" app really costs. A personal finance tool with multiple currencies, credit cards, investments and a decade of imported history is not a weekend project. Normally.</p>
+<h2>The experiment</h2>
+<p>I use Grok Bot, an AI agent app. My bot is named Goji, and it has its own Linux computer to work on. At about 9:00 AM PT I asked Goji for a Suishouji-style app. Before writing anything, it went and studied how sui.com is organized: account types, transaction kinds, categories, the export format. About 20 minutes later I had a first working version running.</p>
+<p>Then I spent the afternoon doing what I would do with a capable engineer sitting next to me. I used it, noticed what was missing, and asked for the next thing. One request at a time, in plain language. Group my accounts into a tree with totals. Let me set a balance and record why it changed. Add reconciliation. Calculate investment returns properly. Put a home page in front with this month's numbers.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-diagram-how-it-was-built.png" alt="Four-step loop: you describe what you need in plain language, Grok Bot researches and builds, Grok Bot tests and backs up, you review and refine, then repeat." /><figcaption>The working loop for the whole day. I described and reviewed; Grok Bot researched, built, tested and backed up.</figcaption></figure>
+<p>By the end of the day there were 133 automated tests passing, and the code was on GitHub, merged through pull requests the bot opened.</p>
+<h2>What I ended up with</h2>
+<p>IACF Finance is a Python FastAPI service with a SQLite database and a single-page web UI that works on both my phone and my desktop.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-26-home.png" alt="IACF Finance home page with demo data: this month&#x27;s income, expense, net and investment income cards, a quick-add box, and a list of recent transactions." /><figcaption>The home page: this month at a glance, quick add at the top, recent entries below. All screenshots use demo data.</figcaption></figure>
+<p>It handles the account types I actually have: bank, credit card, cash, Alipay and WeChat Pay, brokerage, retirement, crypto and loans, in multiple currencies, rolled up into net worth. Transactions cover expense, income, transfer, refund, balance adjustment and investment trades.</p>
+<p>The feature that makes it usable day to day is quick add. I type "åˆé¥­ 35 æ”¯ä»˜å®" or "paid 300 from checking to amex" and it books the entry. If it isn't sure, the entry lands in a To-review inbox instead of being guessed silently. When I want more control, a detailed form pre-fills from what I typed, highlights its guesses, remembers my last choices, and has a save-and-add-another button for entering a stack of receipts.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-17-prefilled-form.png" alt="New transaction form pre-filled from the typed note &#x27;dinner 68 with friends yesterday #weekend&#x27;, with the amount, category, date and tag filled in and the account field highlighted for checking." /><figcaption>Type a sentence, get a pre-filled form. Fields it guessed are highlighted, and nothing is saved until I press Save.</figcaption></figure>
+<p>It also watches a mailbox I configure over IMAP and turns bank alert emails into entries, using parsing rules I can edit. There is an optional Telegram bot. Recurring transactions run from a daily job. Balance adjustments record a transaction with a reason, such as investment gain, interest or fees, so the history stays explainable. Investment accounts get simple, Modified Dietz, annualized and XIRR returns. Backups run daily to local storage, and sync to my own Google Drive is built in as an option.</p>
+<p>None of these features is new on its own. What is unusual is that every one of them is there because I asked for it, and nothing is there that I didn't.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-15-accounts-tree.png" alt="Accounts page with demo data showing assets, liabilities and net worth, and accounts grouped into collapsible Cash, Bank and Credit Card sections with group totals." /><figcaption>Accounts grouped the way I think about them, with group totals in multiple currencies rolling up to net worth.</figcaption></figure>
+<h2>Fourteen years of history</h2>
+<p>The real test was my Suishouji export: about 8,000 rows from 2012 to 2026. Goji built the importer, and we ran it against a test copy of the database first. That surfaced bugs, which it fixed. Only then did we import for real.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-09b-suishouji-import-preview.png" alt="Suishouji import preview using a small sample file: detected sheets and columns, and a mapping table to match Suishouji accounts to new accounts before anything is written." /><figcaption>The Suishouji importer previews and maps everything before writing a row. Shown here with a small sample file, not my history.</figcaption></figure>
+<p>This is where I learned the most about the division of labor. The bot was fast and careful. It backed up the database before every change, tested on copies, and asked before anything risky. But it could not know whether the result was right. I could, because it is my history and I know what it should look like. Checking the import against real data, and deciding when it was good enough, was my job. It should be.</p>
+<p>Reconciliation came out of the same thinking. After an import like that, I wanted a way to anchor each account to a real statement and see exactly where the numbers drift.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-24-reconcile-dialog.png" alt="Reconcile dialog for a demo checking account comparing the statement balance with the app&#x27;s computed balance, showing the difference and a checklist of transactions since the last checkpoint." /><figcaption>Reconciliation (å¯¹è´¦): enter the statement balance, see the difference, tick off transactions, and decide how to record the gap.</figcaption></figure>
+<h2>Your app, your infrastructure</h2>
+<p>The other thing I wanted was independence. No subscription, no vendor holding my data, no risk of the service shutting down. Former Mint users know that feeling. Here the whole database is one SQLite file on a machine I control.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-diagram-your-infrastructure.png" alt="Architecture diagram: phone or PC browser, Telegram and email alerts feed IACF Finance (FastAPI plus one SQLite file), which can run on the bot&#x27;s Linux machine over a private Tailscale network, on a Windows PC, or in Docker, with daily local backups and optional sync to your own Google Drive. No third-party finance SaaS in the data path." /><figcaption>Same code, three ways to run it. The data lives in one SQLite file I own.</figcaption></figure>
+<p>Right now it runs on Goji's own Linux machine, private, reachable only over my Tailscale network. It is also packaged for Windows, with setup.bat, start.bat and an optional start-at-boot task, and there is a Dockerfile for anywhere else. Same code, three ways to deploy it.</p>
+<p>Privacy was part of the process, not an afterthought. My personal data never left my machines. The screenshots in this post use demo data. Before anything went public, the bot checked the package and the repository for personal data and keys.</p>
+<figure class="wp-block-image"><img src="http://www.iacf.us/wp-content/uploads/2026/10/grokbot-finance-27-home-mobile.png" alt="IACF Finance home page on a phone with demo data: monthly summary cards, quick add, recent transactions and a bottom navigation bar." style="max-width:360px" /><figcaption>The same app on a phone, quick add and bottom navigation included.</figcaption></figure>
+<h2>What still needed me</h2>
+<p>Here is the honest list. I had to know what I wanted; those requirements came from fourteen years of habits, and no bot can invent them for me. I had to judge results against reality, especially the import. I had to decide what stays private and when a change was risky enough to slow down.</p>
+<p>And it is a personal tool built in one day. It is well tested for that, but it is not a product with a support team behind it. If you run it, you own it, backups included.</p>
+<h2>The bigger idea</h2>
+<p>For most of my career, getting software has meant a choice: buy a product that mostly fits, or fund a project to build the rest. What I saw on Sunday is a third option. When you need an app, you describe it to an agent, and it builds one that matches your requirements, on infrastructure you choose. You stay the product owner. The agent does the engineering and checks with you before anything you would regret.</p>
+<p>I don't think this replaces professional software teams. Manufacturing systems still need architecture, validation and people who understand the plant floor. But for the long tail of tools that one person or one small team needs, the math has changed.</p>
+<p>The code is on GitHub at <a href="https://github.com/mdaxf/finance">https://github.com/mdaxf/finance</a>. If you try something similar, I would like to hear what you built.</p>
+</article>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

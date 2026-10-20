@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bringing AI agents into the DELMIA Apriso SDLC: introducing apriso-mcp — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Bringing AI agents into the DELMIA Apriso SDLC: introducing apriso-mcp</h1>
+<div class="date">2026-10-13</div>
+<p>Anyone who has delivered on DELMIA Apriso knows where project time goes: turning a business requirement into a CDD/DDD, then into DFCs, Views, Actions, Layouts, Screens and Queries in Process Builder, packaging it all through Global Process Manager, and finally getting it onto a server to test. Each step needs specialist knowledge of the Apriso entity model, Business Components and the database schema.</p>
+
+
+
+<p>At IACF we built apriso-mcp, a Model Context Protocol (MCP) server plus a set of Claude Code skills, so an AI agent can take part in that whole flow and produce real Apriso artifacts, not just pseudo-code.</p>
+
+
+
+<p>What it does (all from the repo):</p>
+
+
+
+<p>🔹 Generates Apriso entities. It has tools for DFC, Screen, View, Query, Layout, Action, BusinessControl and ActionScript. It outputs authentic .gpm ZIP packages that you can import directly into Global Process Manager.<br>🔹 Validates before it builds. A pre-generation validator checks for 65+ common rule violations, and XML well-formedness is checked after generation.<br>🔹 Grounds the LLM in Apriso knowledge. It includes a Business Component catalog (2,763 methods) with a reverse table→BC index, a Business Control catalog, per-version DB schema and primary data for Apriso 2023/2024/2025, and text2sql_context + validate_sql for schema-aware SQL. A tool can also re-extract the schema from a live Apriso SQL Server.<br>🔹 Handles multiple versions. It emits Standard Operation for 2023/2024 and DFC for 2025, with the right FUNCTION_ schema for each.<br>🔹 Lets you preview without a server. An SF-runtime simulator renders the .gpm with the real sf.client.js and Apriso CSS in a local browser, and fills it with contextual dummy data.<br>🔹 Edits and reverse-engineers packages. You can extract an existing .gpm, modify it, and rebuild it as a new revision. An analyzer turns a deployed package into design docs and user guides, and a reverse-engineered BPA knowledge base (23 modules, 1,820 operations, 173 screens) is searchable through MCP tools.<br>🔹 Supports deployment. It generates GPM CLI deploy commands and SSL setup scripts.<br>🔹 Produces design documents. It draws flow, navigation, screen-mockup, ER and sequence diagrams and exports CDD/DDD to HTML, PDF or DOCX.</p>
+
+
+
+<p>Architecture: a single FastMCP server (102 tools) exposed over three transports:<br>• stdio, for Claude Code and local MCP clients<br>• MCP Streamable-HTTP at /mcp, for remote agents<br>• a REST API at /api/* with Swagger, including an OpenAI function-calling bridge</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="http://www.iacf.us/wp-content/uploads/2026/10/architecture.png" alt="" class="wp-image-360"/></figure>
+
+
+
+<p>It runs locally, in Docker, or on a multi-replica cloud deployment. HMAC-signed, time-bound URLs move artifacts from cloud to local, and the code includes path-traversal and expiry checks.</p>
+
+
+
+<p>In the demo video, the skills map to project roles: Designer → Solution Architect, Developer → Technical Consultant, Simulator → Functional Consultant, Deployer → Deployment Engineer. It starts from a drawing: /apriso-designer turns it into a CDD (conceptual design), then a DDD (detailed design) with KPI cards for OEE, Throughput, FPY, Scrap and Rework, including data sources and thresholds. /apriso-developer then builds a 2025 .gpm (8 DFCs, 1 screen, 4 views, 8 custom tables, validation passed), and "simulate DEMO" previews the Plant Manager Dashboard in the SF simulator before anything is deployed.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="http://www.iacf.us/wp-content/uploads/2026/10/03_detailed_design_kpi_t0m40s.png" alt="" class="wp-image-361"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="http://www.iacf.us/wp-content/uploads/2026/10/05_build_complete_simulate_t1m26s.png" alt="" class="wp-image-362"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="http://www.iacf.us/wp-content/uploads/2026/10/06_sf_simulator_dashboard_t1m40s.png" alt="" class="wp-image-363"/></figure>
+
+
+
+<p>From a manufacturing-software point of view, I care less that an LLM writes code and more that the output is a native, importable, validated Apriso package built on the same Business Components and schema that your MES already uses.</p>
+
+
+
+<p>Note: apriso-mcp is an IACF solution, and access requires approval from the IACF team (www.iacf.us).</p>
+
+
+
+<p>🎥 Demo: https://www.youtube.com/watch?v=Nzrbvduf18Q</p>
+
+
+
+<p>#DELMIAApriso #MES #ManufacturingIT #MCP #AIAgents #SmartManufacturing #Industry40</p>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>

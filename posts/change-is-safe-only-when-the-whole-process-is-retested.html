@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change is safe only when the whole process is retested — IACF</title>
+<style>
+:root { --ink:#0f172a; --sub:#475569; --accent:#2563eb; --soft:#f1f5f9; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.65; }
+header.site { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; padding:18px 5vw; border-bottom:1px solid var(--soft); }
+.logo { font-size:24px; font-weight:800; letter-spacing:2px; }
+.logo span { color:var(--accent); }
+nav.main { display:flex; flex-wrap:wrap; gap:4px 18px; }
+nav.main a { color:var(--sub); text-decoration:none; font-size:14.5px; }
+nav.main a:hover { color:var(--accent); }
+main { max-width:860px; margin:0 auto; padding:36px 5vw 60px; }
+main h1 { font-size:32px; line-height:1.25; margin-bottom:8px; }
+.date { color:var(--sub); font-size:14px; margin-bottom:24px; }
+article p { margin:0 0 16px; }
+article h2, article h3, article h4 { margin:26px 0 10px; line-height:1.3; }
+article ul, article ol { margin:0 0 16px 22px; }
+article img { max-width:100%; height:auto; border-radius:8px; }
+article pre { background:var(--soft); padding:14px; border-radius:8px; overflow-x:auto; margin-bottom:16px; font-size:13.5px; }
+article code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:.92em; }
+article pre code { background:none; padding:0; }
+article blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--sub); margin:0 0 16px; }
+article table { border-collapse:collapse; margin-bottom:16px; }
+article td, article th { border:1px solid #cbd5e1; padding:6px 10px; }
+ul.postlist { list-style:none; }
+ul.postlist li { padding:12px 0; border-bottom:1px solid var(--soft); }
+ul.postlist a { color:var(--ink); text-decoration:none; font-weight:600; }
+ul.postlist a:hover { color:var(--accent); }
+ul.postlist .d { color:var(--sub); font-size:13.5px; margin-right:10px; }
+footer { text-align:center; padding:28px 5vw; border-top:1px solid var(--soft); color:var(--sub); font-size:14px; }
+footer a { color:var(--sub); }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="logo">IACF<span>.</span></div>
+  <nav class="main">
+      <a href="../index.html">Home</a>
+      <a href="../pages/what-is-iacf.html">What is IACF</a>
+      <a href="../pages/features.html">Features</a>
+      <a href="../pages/usecases.html">Use Cases</a>
+      <a href="../pages/document.html">Document</a>
+      <a href="../pages/release-0-1-and-roadmap.html">Release 0.1 & Roadmap</a>
+      <a href="../pages/code_of_conduct.html">Code of Conduct</a>
+      <a href="../pages/contact-us.html">Contact</a>
+      <a href="../posts.html">All Posts</a>
+  </nav>
+</header>
+<main>
+<article>
+<h1>Change is safe only when the whole process is retested</h1>
+<div class="date">2026-10-05</div>
+<h2>The problem</h2>
+<p class="risk">Build from scratch, improve what exists, or add one new feature: the result is the same. A change in one place can break a process that worked yesterday, and if nobody retested it before release, production is the test.</p>
+
+<h2><strong>What is Testbot</strong></h2>
+Testbot tests an application from the first release through every improvement: the web UI, the APIs and messages behind it, and the data they leave behind. Agentic AI writes and maintains the tests, and people stay in charge of what runs.
+<h3>One test follows the whole business flow</h3>
+<p class="sub">A test case is not limited to the screen. It can cross every layer a real transaction touches.</p>
+
+<div class="flow"><span class="step">UI: click "Release order"</span><span class="arrow">→</span><span class="step">Message bus: wait for the event
+<small>MQTT · RabbitMQ (AMQP) · Kafka</small></span><span class="arrow">→</span><span class="step">REST: check the order state</span><span class="arrow">→</span><span class="step">Database: verify the saved row</span></div>
+One case, one report: expected against actual for every check, and a screenshot of every UI step.
+<h3>Across the life of the application</h3>
+<div class="grid">
+<div class="card">
+<ul>
+ 	<li>Build</li>
+</ul>
+Record the flow by using the application, write it in Excel or JSON, import existing cases (multi-tab Excel), or describe it in plain language.
+
+</div>
+<div class="card">
+<ul>
+ 	<li>Improve</li>
+</ul>
+Rerun the suite after each change. Choose the cases and their order; tag them (<i>smoke</i>, <i>orders</i>) and declare prerequisites such as login.
+
+</div>
+<div class="card">
+<ul>
+ 	<li>Release</li>
+</ul>
+Run from a build pipeline or a schedule. Track a UAT cycle: final results, progress by day, manual results, sign-off report.
+
+</div>
+<div class="card">
+<ul>
+ 	<li>Maintain</li>
+</ul>
+Every change is a revision. When the page changes, the agent proposes the fix; you review it before it counts.
+
+</div>
+</div>
+<h2>What a tester gets</h2>
+<div class="grid">
+<div class="card">
+<h3>Repeatable</h3>
+The same case runs the same way each time. Unique test data per run, and secrets are kept out of reports and scripts.
+
+</div>
+<div class="card">
+<h3>Evidence</h3>
+HTML and JUnit reports, step screenshots, expected/actual values, and a final result with its final test time for every case.
+
+</div>
+<div class="card">
+<h3>Traceability</h3>
+See every run and session a case took part in, which revision ran, and which suite, session or group it belongs to.
+
+</div>
+<div class="card">
+<h3>Control</h3>
+Run chosen cases in your order, across files, with a failure policy (stop or continue). Email when a session or group completes.
+
+</div>
+</div>
+<h2>How the AI is used, and how far it is trusted</h2>
+<p class="sub">The agent looks at the page, decides, acts and checks, in a loop. A verdict is accepted only when the evidence supports it.</p>
+
+<table>
+<tbody>
+<tr>
+<th>Verdict</th>
+<th>When</th>
+</tr>
+<tr>
+<td><span class="p">pass</span></td>
+<td>Every stated outcome is proven by a passing check, and no server error or error message is left on screen.</td>
+</tr>
+<tr>
+<td><span class="f">fail</span></td>
+<td>A check failed, or an error appeared. A failure with no failed check behind it is marked <i>AI judgement only</i>.</td>
+</tr>
+<tr>
+<td><span class="i">inconclusive</span></td>
+<td>The agent could not finish or could not verify an outcome. It is never shown as a pass.</td>
+</tr>
+</tbody>
+</table>
+&nbsp;
+<table>
+<tbody>
+<tr>
+<th>Risk</th>
+<th>Protection</th>
+</tr>
+<tr>
+<td>Wandering to other sites</td>
+<td>Only the test's own site is allowed, unless you add hosts.</td>
+</tr>
+<tr>
+<td>Destructive actions</td>
+<td>Delete, pay, send, approve and similar clicks are refused unless the objective asks for them.</td>
+</tr>
+<tr>
+<td>Changing data</td>
+<td>Database access is read-only (SELECT).</td>
+</tr>
+<tr>
+<td>Secrets</td>
+<td>Passwords exist only as variables; their values are never shown to the model.</td>
+</tr>
+<tr>
+<td>Prompt injection from page text</td>
+<td>Page content is treated as untrusted data; the tool and site limits apply whatever a page says.</td>
+</tr>
+<tr>
+<td>Runaway cost</td>
+<td>Limits on actions, tokens and time; loops are detected.</td>
+</tr>
+</tbody>
+</table>
+<h2>AI that proposes, people that decide</h2>
+<ul>
+ 	<li><b>Plain-language tests:</b> describe the objective; the agent finds the elements and performs it.</li>
+ 	<li><b>Run to script:</b> a passing agentic run is exported as a normal scripted test, to review and replay with no AI.</li>
+ 	<li><b>Chat:</b> create or change test cases by conversation. You see a step-by-step diff, then apply it or keep it as a draft.</li>
+ 	<li><b>Recommendations and self-healing:</b> after a passing run, or when a target stops matching, the agent suggests steps or a corrected target. You replace, merge or skip.</li>
+ 	<li><b>Revisions:</b> every change is kept at suite and case level. Only the default revision runs, so an AI proposal never changes a test by itself.</li>
+</ul>
+<p class="status"><b>Status:</b> the agentic features are a pilot. The apps, the REST and message-bus steps, and the scripted runner are the established part; use the AI to propose and review.</p>
+
+<h2>Three apps, one folder</h2>
+<div class="grid">
+<div class="card">
+<h3>testbot</h3>
+The runner, for the command line and build pipelines.
+
+</div>
+<div class="card">
+<h3>testbot recorder</h3>
+Use the application and it writes the test.
+
+</div>
+<div class="card">
+<h3>testbot manager</h3>
+Browser UI to edit, import, schedule and analyse.
+
+</div>
+</div>
+Delivered as one application folder, so it also runs on restricted networks.
+<h2>In the test bot manager</h2>
+<figure class="shot">
+
+<figure><img class=" wp-image-311" src="http://www.iacf.us/wp-content/uploads/2026/10/4-uat-group-tracking-300x179.png" alt="A UAT cycle: final results, progress by day, run what has not passed, sign-off." width="508" height="303" /> A UAT cycle: final results, progress by day, run what has not passed, sign-off.</figure>
+
+<figcaption></figcaption></figure>
+<figure class="shot">
+
+<figure><img class=" wp-image-309" src="http://www.iacf.us/wp-content/uploads/2026/10/2-revision-history-300x179.png" alt="Revision history: only the default revision runs; compare, edit or roll back." width="517" height="308" /> Revision history: only the default revision runs; compare, edit or roll back.</figure>
+
+<figcaption></figcaption></figure>
+<figure class="shot">
+
+<figure><img class=" wp-image-310" src="http://www.iacf.us/wp-content/uploads/2026/10/3-reviews-300x179.png" alt="Reviews: agent recommendations and draft revisions waiting for a decision." width="521" height="311" /> Reviews: agent recommendations and draft revisions waiting for a decision.</figure>
+
+<figcaption></figcaption></figure>
+</article>
+</main>
+<footer><p>&copy; 2026 IACF. Static mirror of iacf.us.</p></footer>
+</body>
+</html>
